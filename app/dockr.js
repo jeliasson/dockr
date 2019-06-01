@@ -3,12 +3,7 @@ const package = require('./package.json');
 const program = require('commander')
 
 // Commands
-require('./src/cli/run.js')
-require('./src/cli/create.js')
-require('./src/cli/compose.js')
-require('./src/cli/update.js')
-require('./src/cli/verify.js')
-require('./src/cli/test.js')
+require('./src/cli/commands')
 
 // Define program defaults
 program.version(package.version)
