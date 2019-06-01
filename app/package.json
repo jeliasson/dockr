@@ -1,0 +1,19 @@
+{
+  "name": "dockr",
+  "version": "0.0.1",
+  "description": "A tool for helping you manage docker-compose orchestration",
+  "main": "src/dockr.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jeliasson/dockr.git"
+  },
+  "author": "Johan Eliasson <johan@eliasson.us>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jeliasson/dockr/issues"
+  },
+  "homepage": "https://github.com/jeliasson/dockr#readme"
+}
