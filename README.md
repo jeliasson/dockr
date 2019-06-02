@@ -3,33 +3,12 @@ The goal of **dockr** is to help you administer docker-compose and config files 
 
 ## Getting started
 ### Installation
+Before you start the installation, make sure that `git` and `docker` is installed. 
 Installation script is work in progress. Please open any issues that you may see.
 
-#### Debian, Ubuntu, Raspbian etc
+#### One-time run
 ```bash
-sudo apt-get install git
-cd ~
-git clone https://github.com/jeliasson/dockr.git
-chmod +x ./dockr/app/scripts/install.sh
-./dockr/app/scripts/install.sh
-```
-
-#### Fedora
-```bash
-sudo dnf install git
-cd ~
-git clone https://github.com/jeliasson/dockr.git
-chmod +x ./dockr/app/scripts/install.sh
-./dockr/app/scripts/install.sh
-```
-
-#### CentOS
-```bash
-sudo yum install git
-cd ~
-git clone https://github.com/jeliasson/dockr.git
-chmod +x ./dockr/app/scripts/install.sh
-./dockr/app/scripts/install.sh
+wget -O - https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh | bash
 ```
 
 ## Use Dockr
