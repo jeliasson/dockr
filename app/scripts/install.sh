@@ -12,8 +12,8 @@ chmod +x ./dockr/app/scripts/setup.sh
 # Run setup script
 /bin/bash ./dockr/app/scripts/setup.sh
 
-# Remove this script
-rm -f ./install.sh
-
 # Return back to the orginal path
 popd 2>&1 >/dev/null
+
+# Remove this script
+rm -f ./install.sh
