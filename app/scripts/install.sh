@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install in home directory
-pushd ~
+pushd ~ 2>&1 >/dev/null
 
 # Clone the repository
 git clone https://github.com/jeliasson/dockr.git
@@ -10,7 +10,10 @@ git clone https://github.com/jeliasson/dockr.git
 chmod +x ./dockr/app/scripts/setup.sh
 
 # Run setup script
-./dockr/app/scripts/setup.sh
+/bin/bash ./dockr/app/scripts/setup.sh
+
+# Remove this script
+rm -f ./install.sh
 
 # Return back to the orginal path
-popd
+popd 2>&1 >/dev/null
