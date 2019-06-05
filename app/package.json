@@ -19,6 +19,8 @@
   "homepage": "https://github.com/jeliasson/dockr#readme",
   "dependencies": {
     "colors": "^1.3.3",
-    "commander": "^2.20.0"
+    "commander": "^2.20.0",
+    "consola": "^2.7.1",
+    "shelljs": "^0.8.3"
   }
 }

@@ -1,1 +1,1 @@
-require('./commands/')
+require('./commands')
