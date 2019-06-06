@@ -6,7 +6,9 @@ const program = require('commander')
 program.command('test', 'just a test command')
 
 program.on('command:test', function () {
-    console.log(colors.rainbow('This is a test command'))
+
+    consola.warn('This command is not yet implemented')
+    consola.info('Command should test all yaml files')
     
     process.exit(1)
 })
