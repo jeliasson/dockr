@@ -6,6 +6,7 @@ const paths = {
 
     root: root,
     config: root + '/config',
+    logs: root + '/logs',
     
     app: {
         root: root + '/app',
