@@ -17,21 +17,34 @@ Use `dockr` or alias `dr`.
 ```text
 $ dockr
 
-Usage: dockr [options] [command]
-
 Options:
   -V, --version  output the version number
   -h, --help     output usage information
 
 Commands:
-  run            verify, merge and run docker-compose
+  run            verify, merge and compose up
+  create [app]   create a new app with boilerplates
   compose [cmd]  docker-compose wrapper
+  backup         make a backup of dockr
+  config         cd to dockr config directory
+  info           info about the dockr installation
   update         update dockr
   verify         verify syntax of all yaml files
+  test           just a test command
   help           this help section
   help [cmd]     display help for [cmd]
 ```
 
+## Todo
+- [x] Installation and setup script
+- [x] Update command
+- [x] Info command
+- [ ] Test command w/ yaml linting
+- [ ] Compose command
+- [ ] Run command
+- [ ] Optimize docker compose boilerplate (networks, shares etc)
+- [ ] Use docker image to parse dockr commands
+- [ ] Web interface w/ config editor
 
 ## Contribute
 Feel free to fork and send a Pull Request if you see something that can be made better.
