@@ -1,10 +1,29 @@
+const consola = require('consola')
 const colors = require('colors')
+
 const program = require('commander')
+
+const shell = require('shelljs')
+
+const path = require('../../utils/path')
 
 program.command('update', 'update dockr')
 
 program.on('command:update', function (dir) {
-    console.log('This command should update dockr using e.g. git pull')
+
+    consola.info('Checking if git is installed on the system...')
+    if (!shell.which('git')) {
+        shell.echo('Sorry, this script requires git');
+
+        shell.exit(1);
+    }
+
+    consola.info('Pulling the most recent changes from the repository...')
+    if (shell.exec('(cd ' + path.root + ' && git pull)').code !== 0) {
+        consola.error('Something went wrong trying to pull')
+
+        shell.exit(1);
+    }
 
     process.exit(1)
 })
