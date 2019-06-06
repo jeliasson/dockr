@@ -14,16 +14,18 @@ program.on('command:update', function (dir) {
     consola.info('Checking if git is installed on the system...')
     if (!shell.which('git')) {
         shell.echo('Sorry, this script requires git');
-
-        shell.exit(1);
     }
 
     consola.info('Pulling the most recent changes from the repository...')
     if (shell.exec('(cd ' + path.root + ' && git pull)').code !== 0) {
-        consola.error('Something went wrong trying to pull')
+        
+        consola.error('Something went wrong trying to pull')        
+    } else {
 
-        shell.exit(1);
+        consola.log()
+        consola.success('All good!')
     }
 
+    shell.exit(1);
     process.exit(1)
 })

@@ -1,5 +1,4 @@
 const consola = require('consola')
-
 const colors = require('colors')
 
 const shell = require('shelljs')
