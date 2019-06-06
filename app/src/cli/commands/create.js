@@ -1,4 +1,6 @@
+const consola = require('consola')
 const colors = require('colors')
+
 const program = require('commander')
 
 program.command('create [app]', 'create a new app with boilerplates')
