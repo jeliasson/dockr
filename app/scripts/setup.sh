@@ -48,14 +48,16 @@ echo Installation script state: ${OS_RELEASE}
 echo
 
 # Verify installation acceptance
-while true; do
-    read -p "Do you wish to continue with this installation? " yn
-    case $yn in
-        [Yy]* ) echo && break;;
-        [Nn]* ) exit;;
-        * ) echo "Please answer yes or no.";;
-    esac
-done
+if [ -z "$1" ]; then
+    while true; do
+        read -p "Do you wish to continue with this installation? " yn
+        case $yn in
+            [Yy]* ) echo && break;;
+            [Nn]* ) exit;;
+            * ) echo "Please answer yes or no.";;
+        esac
+    done
+fi
 
 # Request sudo permissions
 echo "Requesting sudo permissions..."
@@ -63,6 +65,7 @@ sudo echo -n ""
 
 # Install node dependencies
 echo "Installing node dependencies..."
+sudo $OS_PACKAGE_MANAGER update 2>&1 >/dev/null
 sudo $OS_PACKAGE_MANAGER install -f nodejs npm 2>&1 >/dev/null
 
 # Installing npm dependencies

@@ -1,0 +1,12 @@
+version: "3.4"
+services:
+  dockr:
+    container_name: dockr
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        force: 1
+    restart: unless-stopped
+    volumes:
+      - "./config:/config"

@@ -1,6 +1,8 @@
 # Dockr
 The goal of **dockr** is to help you administer docker-compose and config files in a easy and predicatable way. It's main purpose is to find `.yaml`-files in the `config/` directory, verify their syntax, and merge them into one to run.
 
+You may use this tool how you like. In the end, it's just merging your docker-compose files into one, and mapping your respective container config paths.
+
 ## Getting started
 ### Installation
 Before you start the installation, make sure that `git` and `docker` is installed. 
@@ -35,15 +37,32 @@ Commands:
   help [cmd]     display help for [cmd]
 ```
 
+## Use Dockr using container wrapper and docker-compose
+Currently working on having the `dockr` command wrapping to a docker container that would run dockr and it's dependencies.
+
+#### docker run
+```
+cd ~/docker
+docker build -t dockr app                 # Build the image and tag it 'dockr'
+docker run -v config:/config dockr info   # Run 'dockr info' with config/ mounted
+```
+
+#### docker-compose
+```
+cd ~/dockr
+docker-compose -f ./app/docker-compose.yaml up
+```
+
 ## Todo
 - [x] Installation and setup script
 - [x] Update command
 - [x] Info command
 - [ ] Test command w/ yaml linting
-- [ ] Compose command
+- [x] Dockerfile
+- [x] Docker Compose command
 - [ ] Run command
 - [ ] Optimize docker compose boilerplate (networks, shares etc)
-- [ ] Use docker image to parse dockr commands
+- [ ] Use dockr image as wrapper for command `dockr` and `dr`.
 - [ ] Web interface w/ config editor
 
 ## Contribute
