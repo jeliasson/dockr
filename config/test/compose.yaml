@@ -1,4 +1,4 @@
 dockr-hello:
-  image: ${IMAGE}
+  image: nginxdemos/hello
   restart: "unless-stopped"
   user: "${PUID}:${PGID}"
