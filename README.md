@@ -1,5 +1,5 @@
 # Dockr
-The goal of **dockr** is to help you administer docker-compose and config files in a easy and predicatable way. It's main purpose is to find `.yaml`-files in the `config/` directory, verify their syntax, and merge them into one to run.
+The goal of **dockr** is to help you administer docker-compose and config files in a easy and predictable way. It's main purpose is to find `.yaml`-files in the `config/` directory, verify their syntax, and merge them into one to run.
 
 You may use this tool how you like. In the end, it's just merging your docker-compose files into one, and mapping your respective container config paths.
 
@@ -37,8 +37,8 @@ Commands:
   help [cmd]     display help for [cmd]
 ```
 
-## Use Dockr using container wrapper and docker-compose
-Currently working on having the `dockr` command wrapping to a docker container that would run dockr and it's dependencies.
+### Use Dockr using container (experimental)
+Working on having the `dockr` command wrapped to run the dockr image, and the end result would be to use dockr without installing any dependencies, besides docker of course, locally. 
 
 #### docker run
 ```
@@ -47,7 +47,7 @@ docker build -t dockr app                 # Build the image and tag it 'dockr'
 docker run -v config:/config dockr info   # Run 'dockr info' with config/ mounted
 ```
 
-#### docker-compose
+#### docker-compose (Example)
 ```
 cd ~/dockr
 docker-compose -f ./app/docker-compose.yaml up
@@ -64,6 +64,7 @@ docker-compose -f ./app/docker-compose.yaml up
 - [ ] Optimize docker compose boilerplate (networks, shares etc)
 - [ ] Use dockr image as wrapper for command `dockr` and `dr`.
 - [ ] Web interface w/ config editor
+- [ ] Adding a few basic templates
 
 ## Contribute
-Feel free to fork and send a Pull Request if you see something that can be made better.
+Feel free to fork and send a [Pull Request](pulls/) if you see something that can be made better.
