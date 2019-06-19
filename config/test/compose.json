@@ -1,0 +1,10 @@
+{
+  "version": "3.4",
+  "services": {
+    "dockr-hello": {
+      "image": "nginxdemos/hello",
+      "restart": "unless-stopped",
+      "user": "${PUID}:${PGID}"
+    }
+  }
+}

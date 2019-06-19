@@ -1,0 +1,4 @@
+dockr-hello:
+  image: ${IMAGE}
+  restart: "unless-stopped"
+  user: "${PUID}:${PGID}"

@@ -34,15 +34,15 @@ Commands:
   verify         verify syntax of all yaml files
   test           just a test command
   help           this help section
-  help [cmd]     display help for [cmd]
 ```
 
 ### Use Dockr using container (experimental)
-Working on having the `dockr` command wrapped to run the dockr image, and the end result would be to use dockr without installing any dependencies, besides docker of course, locally. 
+Working on having the `dockr` command wrapped to run the dockr image, and the end result would be to use dockr without installing any dependencies locally, besides docker of course. 
 
 #### docker run
+Before the image is stable and ready for having an alias for `dockr`, we'll build the image and run it manually.
 ```
-cd ~/docker
+cd ~/docker                               # Go to root path of dockr
 docker build -t dockr app                 # Build the image and tag it 'dockr'
 docker run -v config:/config dockr info   # Run 'dockr info' with config/ mounted
 ```
