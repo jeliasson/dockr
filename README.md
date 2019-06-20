@@ -61,10 +61,11 @@ docker-compose -f ./app/docker-compose.yaml up
 - [x] Dockerfile
 - [x] Docker Compose command
 - [ ] Run command
-- [ ] Optimize docker compose boilerplate (networks, shares etc)
+- [ ] Optimize docker compose boilerplate (prefix, networks, etc)
 - [ ] Use dockr image as wrapper for command `dockr` and `dr`.
 - [ ] Web interface w/ config editor
 - [ ] Adding a few basic templates
+- [ ] Adding something that would be like an marketplace
 
 ## Contribute
 Feel free to fork and send a [Pull Request](pulls/) if you see something that can be made better.

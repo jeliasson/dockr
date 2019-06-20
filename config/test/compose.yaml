@@ -1,4 +1,7 @@
-dockr-hello:
-  image: nginxdemos/hello
-  restart: "unless-stopped"
-  user: "${PUID}:${PGID}"
+version: "3.4"
+services:
+  dockr-hello:
+    image: nginxdemos/hello
+    container_name: dockr-hello
+    restart: "unless-stopped"
+    user: "${PUID}:${PGID}"

@@ -13,7 +13,7 @@ const jsYaml = require('js-yaml')
 const path = require('../../utils/path')
 const yaml = require('../../logic/yaml')
 
-program.command('test', 'just a test command')
+program.command('test', 'test docker-compose files')
 
 program.on('command:test', function () {
 

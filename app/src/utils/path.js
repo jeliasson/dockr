@@ -12,7 +12,12 @@ const paths = {
         root: root + '/app',
         bin: root + '/app/bin',
         src: root + '/app/src',
+        tmp: root + '/app/tmp',
         utils: __dirname
+    },
+
+    docker: {
+        compose: root + '/docker-compose.yaml'
     },
 
     script: {

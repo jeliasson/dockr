@@ -1,25 +1,27 @@
-dockr:
-  image: node:10
-  container_name: dockr
-  restart: unless-stopped
-  volumes:
-    - "${DATA_PATH}/dockr/data:/data"
-  ports:
-    - "${PUID}:${PGID}"
-  depends_on:
-    - dockr-db
+version: "3.4"
+services:
+  dockr:
+    image: node:10
+    container_name: dockr
+    restart: unless-stopped
+    volumes:
+      - "${DATA_PATH}/dockr/data:/data"
+    ports:
+      - "${PUID}:${PGID}"
+    depends_on:
+      - dockr-db
 
-dockr-db:
-  image: mariadb
-  container_name: dockr-db
-  restart: unless-stopped
-  user: ${PUID}:${PGID}
-  environment:
-    MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
-    MYSQL_DATABASE: "${MYSQL_DATABASE}"
-    MYSQL_USER: "${MYSQL_USER}"
-    MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
-  volumes:
-    - "${DATA_PATH}/dockr-db/data/mysql:/var/lib/mysql"
-  ports:
-    - "${MYSQL_PORT}:3306"
+  dockr-db:
+    image: mariadb
+    container_name: dockr-db
+    restart: unless-stopped
+    user: ${PUID}:${PGID}
+    environment:
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+    volumes:
+      - "${DATA_PATH}/dockr-db/data/mysql:/var/lib/mysql"
+    ports:
+      - "${MYSQL_PORT}:3306"

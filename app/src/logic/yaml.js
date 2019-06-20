@@ -39,12 +39,20 @@ const files = function () {
 // Parse all yaml files and it's variables
 const parse = function(files) {
 
-    let parsed = `version: "3.4"\nservices:\n`
+    // Root .env config
+    const rootConfigPath = `${path.config}/.env`
+    const rootConfig = require('dotenv').config({ path: rootConfigPath })
 
-    let rootConfigPath = `${path.config}/.env`
-    let rootConfig = require('dotenv').config({ path: rootConfigPath })
+    // Create output directory if not already exists
+    const outputPath = `${path.app.tmp}/yaml-parse-staging`
+    if (!fs.existsSync(outputPath)) {
+        fs.mkdirSync(outputPath, 0700);
+    }
 
-    files.forEach(async function(file) {
+    let outputFiles = []
+
+    // Foreach all identified yaml files
+    files.forEach(function(file) {
         consola.log('- Processing ' + file.app)
 
         // Construct a path config
@@ -59,12 +67,16 @@ const parse = function(files) {
         // Parse it to an object
         let object = toObject(content)
 
+        // @todo: Add environment variable to identify dockr generated compose
+        // e.g. DOCKR_GENERATED = YYYY-MM-DD HH:II:SS
+
         // Stringify the object (parsed by the YAML library)
         let yaml = YAML.stringify(object)
 
         let config = {}
         let output = yaml;
 
+        // App .env config
         let appConfigPath = `${path.config}/${file.app}/.env`
         if (fs.existsSync(appConfigPath)) {
 
@@ -80,6 +92,7 @@ const parse = function(files) {
             config = Object.assign(rootConfig.parsed, pathConfig)
         }
 
+        // Replace ${VARIABLES} with those merged in config
         output = output.replace(/\$\{.*?\}/g, function (match) {
 
             // Get the actual environment variable
@@ -103,12 +116,28 @@ const parse = function(files) {
             return `\t${ln}` 
         });
 
-        parsed += output
+        // Save final yaml file
+        let outputFile = `${outputPath}/${file.app}-${file.file}.yaml`
+        fs.writeFileSync(outputFile, output)
+        outputFiles.push(outputFile)
     })
-
     console.log()
 
-    return parsed
+    // Generate docker compose arguments and output file
+    const outputFilesAsArgument = outputFiles.map(function(file) { return `-f ${file}` }).join(' ')
+    const outputFileMerged = `${path.docker.compose}`
+    
+    // Merge files
+    shell.exec(`docker-compose ${outputFilesAsArgument} config > ${outputFileMerged}`, { silent: true })
+
+    // Clean up
+    outputFiles.forEach(function(file) {
+        fs.unlinkSync(file)
+    })
+
+    consola.success('Merge of files completed.')
+
+    return outputFileMerged
 }
 
 // Parse yaml content to js-yaml

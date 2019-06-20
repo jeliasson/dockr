@@ -18,14 +18,15 @@ program.on('command:run', function (dir) {
     consola.log()
 
     // Parse
-    const parsed = yaml.parse(yaml.files())
+    const outputFileMerged = yaml.parse(yaml.files())
+    const cmd = `docker-compose -f ${outputFileMerged} up -d`
 
-    // Write file to 
-    const generatedYaml = `${path.root}/docker-compose.yaml`
-    fs.writeFileSync(generatedYaml, parsed)
+    console.log()
+    consola.info('Running docker-compose...')
+    console.log(`Command: ${cmd}`)
+    console.log()
 
-    console.log(`docker-compose -f ${generatedYaml} up`)
-    shell.exec(`docker-compose -f ${generatedYaml} up`)
+    shell.exec(cmd))
 
     process.exit(1)
 })
