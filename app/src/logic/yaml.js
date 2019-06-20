@@ -72,7 +72,7 @@ const parse = function(files) {
             let appConfig = require('dotenv').config({ path: appConfigPath })
             
             // Merge root, application and path config
-            config = Object.assign(rootConfig.parsed, appConfig.parsed, pathConfig)
+            config = Object.assign(rootConfig.parsed, pathConfig, appConfig.parsed)
 
         } else {
 
