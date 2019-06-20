@@ -26,7 +26,7 @@ program.on('command:run', function (dir) {
     console.log(`Command: ${cmd}`)
     console.log()
 
-    shell.exec(cmd))
+    shell.exec(cmd)
 
     process.exit(1)
 })
