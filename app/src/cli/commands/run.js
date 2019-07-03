@@ -8,9 +8,7 @@ const shell = require('shelljs')
 const path = require('../../utils/path')
 const yaml = require('../../logic/yaml')
 
-program.command('run', 'verify, merge and compose up')
-
-program.on('command:run', function (dir) {
+program.command('run', 'verify, merge and compose up').action(async function (dir) {
 
     consola.warn('This command is work in progress.')
     
@@ -23,7 +21,7 @@ program.on('command:run', function (dir) {
 
     console.log()
     consola.info('Running docker-compose...')
-    console.log(`Command: ${cmd}`)
+    //console.log(`Command: ${cmd}`) // @todo: Add to debugging switch
     console.log()
 
     shell.exec(cmd)

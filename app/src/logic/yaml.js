@@ -61,12 +61,19 @@ const parse = function(files) {
             CONFIG_PATH: `${path.config}/${file.app}`
         }
 
+        // Verify that the data directory exists
+        if (!fs.existsSync(`${pathConfig.DATA_PATH}`)) {
+            consola.error(`Missing 'data' directory for ${file.app}\nSuggested fix: mkdir ${pathConfig.DATA_PATH}`)
+
+            process.exit(1)
+        }
+
         // Get yaml file content
-        let content = fs.readFileSync(file.path, 'utf8')
+        let content = fs.readFileSync(file.path, 'utf8');
 
         // Parse it to an object
         let object = toObject(content)
-
+        
         // @todo: Add environment variable to identify dockr generated compose
         // e.g. DOCKR_GENERATED = YYYY-MM-DD HH:II:SS
 
@@ -74,7 +81,7 @@ const parse = function(files) {
         let yaml = YAML.stringify(object)
 
         let config = {}
-        let output = yaml;
+        let output = yaml
 
         // App .env config
         let appConfigPath = `${path.config}/${file.app}/.env`
@@ -128,7 +135,8 @@ const parse = function(files) {
     const outputFileMerged = `${path.docker.compose}`
     
     // Merge files
-    shell.exec(`docker-compose ${outputFilesAsArgument} config > ${outputFileMerged}`, { silent: true })
+    const mergeCommand = `docker-compose ${outputFilesAsArgument} config > ${outputFileMerged}`
+    shell.exec(mergeCommand, { silent: false })
 
     // Clean up
     outputFiles.forEach(function(file) {
