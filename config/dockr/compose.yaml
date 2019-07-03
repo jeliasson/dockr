@@ -5,7 +5,7 @@ services:
     container_name: dockr
     restart: unless-stopped
     volumes:
-      - "${DATA_PATH}/dockr/data:/data"
+      - "${DATA_PATH}:/data"
     ports:
       - "${PUID}:${PGID}"
     depends_on:
@@ -22,6 +22,6 @@ services:
       MYSQL_USER: "${MYSQL_USER}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
     volumes:
-      - "${DATA_PATH}/dockr-db/data/mysql:/var/lib/mysql"
+      - "${DATA_PATH}/mysql:/var/lib/mysql"
     ports:
       - "${MYSQL_PORT}:3306"
