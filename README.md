@@ -73,6 +73,8 @@ dockr-hello is up-to-date
 portainer is up-to-date
 ```
 
+_In above example, both images were already built and running._
+
 
 ## Environment variables
 
@@ -90,7 +92,7 @@ It's recommended to use globally defined and generated environment variables, su
 |----------- | ------------- | ------------- | --------------------- |
 | Global     | `PUID`        | `1000`        | Default system user id to run docker containers. |
 | Global     | `PGID`        | `1000`        | Default system group id to run docker containers. |
-| Global     | `DATA_DIR`        | `[...]/dockr/config/<app>/data`        | Absolute path to apps `data` directory |
+| Global     | `DATA_DIR`        | `/[...]/dockr/config/<app>/data`        | Absolute path to apps `data` directory |
 | App        | `PORT`        | `8080` | Example described in [Environment variables](#environment-variables).
 
 ## Use Dockr using container (experimental)

@@ -1,4 +1,4 @@
-version: "3.4"
+version: "3.7"
 services:
   dockr:
     image: node:10
@@ -17,6 +17,7 @@ services:
     restart: unless-stopped
     user: ${PUID}:${PGID}
     environment:
+      TZ: "${TZ}"
       MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
       MYSQL_DATABASE: "${MYSQL_DATABASE}"
       MYSQL_USER: "${MYSQL_USER}"

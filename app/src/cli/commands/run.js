@@ -17,7 +17,7 @@ program.command('run', 'verify, merge and compose up').action(async function (di
 
     // Parse
     const outputFileMerged = yaml.parse(yaml.files())
-    const cmd = `docker-compose -f ${outputFileMerged} up -d`
+    const cmd = `docker-compose -f ${outputFileMerged} up -d --remove-orphans`
 
     console.log()
     consola.info('Running docker-compose...')

@@ -139,9 +139,11 @@ const parse = function(files) {
     shell.exec(mergeCommand, { silent: false })
 
     // Clean up
+    /*
     outputFiles.forEach(function(file) {
         fs.unlinkSync(file)
     })
+    */
 
     consola.success('Merge of files completed.')
 
