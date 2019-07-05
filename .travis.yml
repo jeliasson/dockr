@@ -5,7 +5,7 @@ sudo: required
 jobs:
   include:
     - stage: Downloading install script
-      script: wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null && bash install.sh --force
+      script: wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null && bash install.sh
 
     - stage: Testing dockr command
       script: dockr

@@ -48,7 +48,7 @@ echo Installation script state: ${OS_RELEASE}
 echo
 
 # Verify installation acceptance
-if [ -z "$1" ]; then
+if [ -z "${FORCE}" ]; then
     while true; do
         read -p "Do you wish to continue with this installation? " yn
         case $yn in
