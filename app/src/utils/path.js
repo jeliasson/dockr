@@ -5,6 +5,7 @@ const root = path.dirname(require.main.filename).split(path.sep).slice(0, -1).jo
 const paths = {
 
     root: root,
+    backup: root + '/backup',
     config: root + '/config',
     logs: root + '/logs',
     
@@ -13,6 +14,7 @@ const paths = {
         bin: root + '/app/bin',
         src: root + '/app/src',
         tmp: root + '/app/tmp',
+        templates: root + '/app/templates',
         utils: __dirname
     },
 

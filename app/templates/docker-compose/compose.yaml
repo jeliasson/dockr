@@ -1,0 +1,22 @@
+#
+# Dockr app template for __APP__
+#
+version: "3.7"
+services:
+  ${DOCKR_APP_NAME}:
+    container_name: ${DOCKR_APP_NAME}
+    hostname: ${DOCKR_APP_NAME}
+    labels:
+      dockr.app.name: ${DOCKR_APP_NAME}
+      dockr.app.path: ${DOCKR_APP_PATH} 
+      dockr.description: "Undefined dockr app description"
+    image: node:10
+    restart: unless-stopped
+    user: ${PUID}:${PGID}
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - ${DOCKR_DATA_PATH}:/data
+    environment:
+    - TZ=${TZ}
+    #ports:
+    #- 8080:80
