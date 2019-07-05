@@ -1,14 +1,22 @@
 version: "3.7"
 services:
-  ${APP}:
-    container_name: ${APP}
-    hostname: ${APP}
+  ${APP}-cli:
+    container_name: ${APP}-cli
+    hostname: ${APP}-cli
     image: node:10
     restart: unless-stopped
     volumes:
-      - "${DATA_PATH}:/data"
+      - "${DATA_PATH}/cli:/data"
+
+  ${APP}-web:
+    container_name: ${APP}-web
+    hostname: ${APP}-web
+    image: node:10
+    restart: unless-stopped
+    volumes:
+      - "${DATA_PATH}/web:/data"
     ports:
-      - "${PUID}:${PGID}"
+      - "8180:80"
     depends_on:
       - ${APP}-db
 

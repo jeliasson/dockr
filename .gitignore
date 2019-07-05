@@ -1,4 +1,5 @@
 docker-compose.yaml
 config/*
-!config/docker
-!config/docker-db
+!config/dockr*/.gitignore
+!config/dockr*/data
+!config/dockr*/compose.yaml
