@@ -1,8 +1,0 @@
-*
-**/compose.json
-!.env
-!.gitignore
-!dockr/
-!dockr/*
-!test/
-!test/*

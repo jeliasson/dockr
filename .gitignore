@@ -1,1 +1,4 @@
 docker-compose.yaml
+config/*
+!config/docker
+!config/docker-db
