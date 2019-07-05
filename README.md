@@ -1,4 +1,7 @@
 # Dockr
+
+[![Greenkeeper badge](https://badges.greenkeeper.io/jeliasson/dockr.svg)](https://greenkeeper.io/)
+
 The goal of **dockr** is to help you administer docker-compose and your container config files in a easy and predictable way. It's main purpose is to find `compose.yaml`-files in the `config/**/` directory, verify their syntax, and merge them into one to run.
 
 You may use this tool how you like. In the end, it's just merging your docker-compose files into one, and can optionally use global and app specific environment variables.
