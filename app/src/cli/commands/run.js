@@ -13,10 +13,18 @@ program.command('run', 'verify, merge and compose up').action(async function (di
     consola.warn('This command is work in progress.')
     
     consola.info('Finding yaml files in config directory...')
-    consola.log()
 
-    // Parse
-    const outputFileMerged = yaml.parse(yaml.files())
+    // Try parsing the files
+    try {
+
+        const outputFileMerged = yaml.parse(yaml.files())
+
+    } catch (err) {
+        consola.error(`An error occured while processing merging yaml files`)
+        consola.info(err)
+
+        process.exit(1)
+    }
     const cmd = `docker-compose -f ${outputFileMerged} up -d --remove-orphans`
 
     console.log()

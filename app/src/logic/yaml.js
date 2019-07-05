@@ -56,14 +56,15 @@ const parse = function(files) {
         consola.log('- Processing ' + file.app)
 
         // Construct a path config
-        let pathConfig = {
+        let appForeachConfig = {
+            APP: `${file.app}`,
             DATA_PATH: `${path.config}/${file.app}/data`,
             CONFIG_PATH: `${path.config}/${file.app}`
         }
 
         // Verify that the data directory exists
-        if (!fs.existsSync(`${pathConfig.DATA_PATH}`)) {
-            consola.error(`Missing 'data' directory for ${file.app}\nSuggested fix: mkdir ${pathConfig.DATA_PATH}`)
+        if (!fs.existsSync(`${appForeachConfig.DATA_PATH}`)) {
+            consola.error(`Missing 'data' directory for ${file.app}\nSuggested fix: mkdir ${appForeachConfig.DATA_PATH}`)
 
             process.exit(1)
         }
@@ -91,12 +92,12 @@ const parse = function(files) {
             let appConfig = require('dotenv').config({ path: appConfigPath })
             
             // Merge root, application and path config
-            config = Object.assign(rootConfig.parsed, pathConfig, appConfig.parsed)
+            config = Object.assign(rootConfig.parsed, appForeachConfig, appConfig.parsed)
 
         } else {
 
             // Merge root and path config
-            config = Object.assign(rootConfig.parsed, pathConfig)
+            config = Object.assign(rootConfig.parsed, appForeachConfig)
         }
 
         // Replace ${VARIABLES} with those merged in config
@@ -108,6 +109,15 @@ const parse = function(files) {
             let env = exec[1]
 
             // Return dotenv variable if not undefined, otherwise set 'undefined-env'
+            if (typeof (config[env]) != "undefined") {
+                let value = config[env]
+            } else {
+                let value = '!!! undefined-env !!!'
+
+                consola.error(`Use of undefined env ${env} in ${file.app}'s compose.yaml\nAdd ${env}=<value> in ${appConfigPath}`)
+
+                process.exit(1)
+            }
             let value =  (typeof (config[env]) != "undefined") ?
                 (config[env]) :
                 '!!! undefined-env !!!'

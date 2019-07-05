@@ -93,7 +93,9 @@ It's recommended to use globally defined and generated environment variables, su
 | Global     | `PUID`        | `1000`        | Default system user id to run docker containers. |
 | Global     | `PGID`        | `1000`        | Default system group id to run docker containers. |
 | Global     | `DATA_DIR`        | `/[...]/dockr/config/<app>/data`        | Absolute path to apps `data` directory |
-| App        | `PORT`        | `8080` | Example described in [Environment variables](#environment-variables).
+| Global     | `APP`         | `[app]`        | App name during merge process of yaml files |
+| Global     | `TZ`          | `Europe/Malta` | Timezone |
+| App        | `PORT`        | `8080`         | Example described in [Environment variables](#environment-variables). |
 
 ## Use Dockr using container (experimental)
 Working on having the `dockr` command wrapped to run the dockr image, and the end result would be to use dockr without installing any dependencies locally, besides docker of course. 

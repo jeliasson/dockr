@@ -1,19 +1,21 @@
 version: "3.7"
 services:
-  dockr:
+  ${APP}:
+    container_name: ${APP}
+    hostname: ${APP}
     image: node:10
-    container_name: dockr
     restart: unless-stopped
     volumes:
       - "${DATA_PATH}:/data"
     ports:
       - "${PUID}:${PGID}"
     depends_on:
-      - dockr-db
+      - ${APP}-db
 
-  dockr-db:
+  ${APP}-db:
+    container_name: ${APP}-db
+    hostname: ${APP}-db
     image: mariadb
-    container_name: dockr-db
     restart: unless-stopped
     user: ${PUID}:${PGID}
     environment:
@@ -23,6 +25,7 @@ services:
       MYSQL_USER: "${MYSQL_USER}"
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - "${DATA_PATH}/mysql:/var/lib/mysql"
     ports:
       - "${MYSQL_PORT}:3306"
