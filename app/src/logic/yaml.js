@@ -53,7 +53,7 @@ const parse = function(files) {
 
     // Foreach all identified yaml files
     files.forEach(function(file) {
-        consola.log('- Processing ' + file.app)
+        consola.log(`- `.gray + `Processing ${file.app}`)
 
         // Construct a path config
         let appForeachConfig = {
