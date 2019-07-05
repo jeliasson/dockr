@@ -1,8 +1,8 @@
 version: "3.7"
 services:
-  ${APP}:
+  ${DOCKR_APP_NAME}:
     image: nginxdemos/hello
-    container_name: ${APP}
+    container_name: ${DOCKR_APP_NAME}
     restart: "unless-stopped"
     user: "${PUID}:${PGID}"
     environment:

@@ -1,28 +1,28 @@
 version: "3.7"
 services:
-  ${APP}-cli:
-    container_name: ${APP}-cli
-    hostname: ${APP}-cli
+  ${DOCKR_APP_NAME}-cli:
+    container_name: ${DOCKR_APP_NAME}-cli
+    hostname: ${DOCKR_APP_NAME}-cli
     image: node:10
     restart: unless-stopped
     volumes:
-      - "${DATA_PATH}/cli:/data"
+      - "${DOCKR_DATA_PATH}/cli:/data"
 
-  ${APP}-web:
-    container_name: ${APP}-web
-    hostname: ${APP}-web
+  ${DOCKR_APP_NAME}-web:
+    container_name: ${DOCKR_APP_NAME}-web
+    hostname: ${DOCKR_APP_NAME}-web
     image: node:10
     restart: unless-stopped
     volumes:
-      - "${DATA_PATH}/web:/data"
+      - "${DOCKR_DATA_PATH}/web:/data"
     ports:
       - "8180:80"
     depends_on:
-      - ${APP}-db
+      - ${DOCKR_APP_NAME}-db
 
-  ${APP}-db:
-    container_name: ${APP}-db
-    hostname: ${APP}-db
+  ${DOCKR_APP_NAME}-db:
+    container_name: ${DOCKR_APP_NAME}-db
+    hostname: ${DOCKR_APP_NAME}-db
     image: mariadb
     restart: unless-stopped
     user: ${PUID}:${PGID}
@@ -34,6 +34,6 @@ services:
       MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - "${DATA_PATH}/mysql:/var/lib/mysql"
+      - "${DOCKR_DATA_PATH}/mysql:/var/lib/mysql"
     ports:
       - "${MYSQL_PORT}:3306"

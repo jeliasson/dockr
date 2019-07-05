@@ -56,15 +56,16 @@ const parse = function(files) {
         consola.log(`- `.gray + `Processing ${file.app}`)
 
         // Construct a path config
-        let appForeachConfig = {
-            APP: `${file.app}`,
-            DATA_PATH: `${path.config}/${file.app}/data`,
-            CONFIG_PATH: `${path.config}/${file.app}`
+        let dockrAppConfig = {
+            DOCKR_APP_NAME: `${file.app}`,
+            DOCKR_APP_PATH: `${path.config}/${file.app}`,
+            DOCKR_DATA_PATH: `${path.config}/${file.app}/data`,
+            DOCKR_CONFIG_PATH: `${path.config}/${file.app}`
         }
 
         // Verify that the data directory exists
-        if (!fs.existsSync(`${appForeachConfig.DATA_PATH}`)) {
-            consola.error(`Missing 'data' directory for ${file.app}\nSuggested fix: mkdir ${appForeachConfig.DATA_PATH}`)
+        if (!fs.existsSync(`${dockrAppConfig.DOCKR_DATA_PATH}`)) {
+            consola.error(`Missing 'data' directory for ${file.app}\nSuggested fix: mkdir ${dockrAppConfig.DOCKR_DATA_PATH}`)
 
             process.exit(1)
         }
@@ -92,12 +93,12 @@ const parse = function(files) {
             let appConfig = require('dotenv').config({ path: appConfigPath })
             
             // Merge root, application and path config
-            config = Object.assign(rootConfig.parsed, appForeachConfig, appConfig.parsed)
+            config = Object.assign(rootConfig.parsed, dockrAppConfig, appConfig.parsed)
 
         } else {
 
             // Merge root and path config
-            config = Object.assign(rootConfig.parsed, appForeachConfig)
+            config = Object.assign(rootConfig.parsed, dockrAppConfig)
         }
 
         // Replace ${VARIABLES} with those merged in config

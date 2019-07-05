@@ -23,12 +23,15 @@ Make sure everything went fine by either running `dockr` or `dockr info`. You ca
 ```text
 $ dockr
 
+Usage: dockr [options] [command]
+
 Options:
   -V, --version  output the version number
   -h, --help     output usage information
 
 Commands:
   run            verify, merge and compose up
+  edit [app]     edit app composer.yaml
   create [app]   create a new app with boilerplates
   compose [cmd]  docker-compose wrapper
   backup         make a backup of dockr
@@ -36,8 +39,10 @@ Commands:
   info           info about the dockr installation
   update         update dockr
   verify         verify syntax of all yaml files
-  test           just a test command
+  test           test docker-compose files
+  clean          clean temporary generated files
   help           this help section
+  help [cmd]     display help for [cmd]
 ```
 
 ## Create a app (**Work in progress**)
@@ -92,8 +97,9 @@ It's recommended to use globally defined and generated environment variables, su
 |----------- | ------------- | ------------- | --------------------- |
 | Global     | `PUID`        | `1000`        | Default system user id to run docker containers. |
 | Global     | `PGID`        | `1000`        | Default system group id to run docker containers. |
-| Global     | `DATA_DIR`        | `/[...]/dockr/config/<app>/data`        | Absolute path to apps `data` directory |
-| Global     | `APP`         | `[app]`        | App name during merge process of yaml files |
+| Global     | `DOCKR_DATA_DIR`        | `/[...]/dockr/config/<app>/data`        | Absolute path to apps `data` directory |
+| Global     | `DOCKR_APP_NAME`         | `[app]`        | App name during merge process of yaml files |
+| Global     | `DOCKR_APP_PATH`         | `/[...]/config/[app]`        | Absolute app path during merge process of yaml files |
 | Global     | `TZ`          | `Europe/Malta` | Timezone |
 | App        | `PORT`        | `8080`         | Example described in [Environment variables](#environment-variables). |
 
