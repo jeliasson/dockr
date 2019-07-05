@@ -2,22 +2,22 @@ language: generic
 
 sudo: required
 
-addons:
-  apt:
-    packages:
-      - docker.io
-      - git
-
 jobs:
   include:
     - stage: Downloading install script
-      script: wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null
-  
-    - stage: Running install
-      script: bash install.sh
+      script: wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null && bash install.sh
 
     - stage: Testing dockr command
       script: dockr
 
     - stage: Testing dockr help
       script: dockr help
+
+    - stage: Create a dockr app
+      script: dockr create test-app
+
+    - stage: Install apt dependencies
+      script: apt-get install docker.io git
+
+    - stage: Dockr run
+      script: dockr run
