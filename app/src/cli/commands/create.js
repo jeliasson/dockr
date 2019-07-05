@@ -64,22 +64,10 @@ program.on('command:create', function (args) {
                 let exec = variable.exec(match)
                 let env = exec[1]
 
-                // Return dotenv variable if not undefined, otherwise set '!!! undefined-env !!!'
-                if (typeof (replacements[env]) != "undefined") {
-                    let value = replacements[env]
-                } else {
-                    let value = '!!! undefined-env !!!'
-
-                    consola.error(`baaa`)
-
-                    process.exit(1)
-                }
-
-                console.log(value, env)
+                return replacements[env]
             });
-            
-            
-            console.log(output)
+
+            consola.success(`Created app '${appName}' in directory ${path.config}/${appName}`)
 
         } else {
             consola.error(`${appName} already exists. Aborting.`)

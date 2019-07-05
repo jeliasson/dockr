@@ -1,5 +1,5 @@
 # Dockr
-
+[![Build Status](https://www.travis-ci.com/jeliasson/dockr.svg?branch=master)](https://www.travis-ci.com/jeliasson/dockr)
 [![Greenkeeper badge](https://badges.greenkeeper.io/jeliasson/dockr.svg)](https://greenkeeper.io/)
 
 The goal of **dockr** is to help you administer docker-compose and your container config files in a easy and predictable way. It's main purpose is to find `compose.yaml`-files in the `config/**/` directory, verify their syntax, and merge them into one to run.
@@ -8,6 +8,13 @@ You may use this tool how you like. In the end, it's just merging your docker-co
 
 Please note that this project is under development. While it's being used in small production, do not use this in your production environment until you feel comfortable.
 
+## Features
+* One-line installation and setup
+* Easily create a new dockr app from a template using `dockr run [app]`
+* Environment variables templating in `compose.yaml` files
+* Verify, merge and docker-compose up using `dockr run`
+* Easy update to latest version of dockr using `dockr update`
+
 ## Getting started
 ### Installation
 Installation script is work in progress. Please open any issues that you may see.
@@ -15,7 +22,7 @@ Installation script is work in progress. Please open any issues that you may see
 Before you start the installation, make sure that `git` and `docker` is installed. 
 
 #### One-line installation
-As a general note, never trust installation scripts from unknown sources. This includes this project and repository. If you want to inspect the installation scripts, broadly see [install.sh](https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh) and [setup.sh](https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/setup.sh).
+As a general note, never trust installation scripts from unknown sources. This includes this project and repository. If you want to inspect the installation scripts, broadly see [install.sh](https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh) and [setup.sh](https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/setup.sh). You may also check out the [latest builds](https://www.travis-ci.com/jeliasson/dockr) to see what to expect.
 
 ```bash
 wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null && bash install.sh
@@ -122,20 +129,6 @@ docker run -v config:/config dockr info   # Run 'dockr info' with config/ mounte
 cd ~/dockr
 docker-compose -f ./app/docker-compose.yaml up
 ```
-
-## Todo
-- [x] Installation and setup script
-- [x] Update command
-- [x] Info command
-- [ ] Test command w/ yaml linting
-- [x] Dockerfile
-- [x] Docker Compose command
-- [X] Run command
-- [ ] Optimize docker compose boilerplate (prefix, networks, etc)
-- [ ] Use dockr image as wrapper for command `dockr` and `dr`.
-- [ ] Web interface w/ config editor
-- [ ] Adding a few basic templates
-- [ ] Adding something that would be like an marketplace
 
 ## Contribute
 Feel free to fork and send a [Pull Request](pulls/) if you see something that can be made better. ❤️
