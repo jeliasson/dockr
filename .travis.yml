@@ -4,20 +4,20 @@ sudo: required
 
 jobs:
   include:
-    - stage: Downloading install script
-      script: wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null && bash install.sh
+    - script: wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null && bash install.sh
+      name: Downloading install script
 
-    - stage: Testing dockr command
-      script: dockr
+    - script: dockr
+      name: Testing dockr command
 
-    - stage: Testing dockr help
-      script: dockr help
+    - script: dockr help
+      name: Testing dockr help
 
-    - stage: Create a dockr app
-      script: dockr create test-app
+    - script: dockr create test-app
+      name: Create a dockr app
 
-    - stage: Install apt dependencies
-      script: apt-get install docker.io git
+    - script: apt-get install docker.io git
+      name: Install apt dependencies
 
-    - stage: Dockr run
-      script: dockr run
+    - script: dockr run
+      name: Dockr run
