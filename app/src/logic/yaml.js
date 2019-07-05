@@ -109,7 +109,7 @@ const parse = function(files) {
             let exec = variable.exec(match)
             let env = exec[1]
 
-            // Return dotenv variable if not undefined, otherwise set 'undefined-env'
+            // Return dotenv variable if not undefined, otherwise set '!!! undefined-env !!!'
             if (typeof (config[env]) != "undefined") {
                 let value = config[env]
             } else {
