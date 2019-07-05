@@ -1,3 +1,23 @@
-language: node_js
-node_js:
- - "node"
+language: generic
+
+sudo: required
+
+addons:
+  apt:
+    packages:
+      - docker.io
+      - git
+
+jobs:
+  include:
+    - stage: Downloading install script
+      script: wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null && 
+  
+    - stage: Running install
+      script: bash install.sh
+
+    - stage: Testing dockr command
+      script: dockr
+
+    - stage: Testing dockr help
+      script: dockr help
