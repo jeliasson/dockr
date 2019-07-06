@@ -1,0 +1,39 @@
+version: "3.7"
+services:
+  ${DOCKR_APP_NAME}-cli:
+    container_name: ${DOCKR_APP_NAME}-cli
+    hostname: ${DOCKR_APP_NAME}-cli
+    image: node:10
+    restart: unless-stopped
+    volumes:
+    - "${DOCKR_DATA_PATH}/cli:/data"
+
+  ${DOCKR_APP_NAME}-web:
+    container_name: ${DOCKR_APP_NAME}-web
+    hostname: ${DOCKR_APP_NAME}-web
+    image: node:10
+    restart: unless-stopped
+    volumes:
+    - "${DOCKR_DATA_PATH}/web:/data"
+    ports:
+    - "18100:80/tcp"
+    depends_on:
+    - ${DOCKR_APP_NAME}-db
+
+  ${DOCKR_APP_NAME}-db:
+    container_name: ${DOCKR_APP_NAME}-db
+    hostname: ${DOCKR_APP_NAME}-db
+    image: mariadb
+    restart: unless-stopped
+    user: ${PUID}:${PGID}
+    environment:
+      TZ: "${TZ}"
+      MYSQL_ROOT_PASSWORD: "${MYSQL_ROOT_PASSWORD}"
+      MYSQL_DATABASE: "${MYSQL_DATABASE}"
+      MYSQL_USER: "${MYSQL_USER}"
+      MYSQL_PASSWORD: "${MYSQL_PASSWORD}"
+    volumes:
+    - /etc/localtime:/etc/localtime:ro
+    - "${DOCKR_DATA_PATH}/mysql:/var/lib/mysql"
+    ports:
+    - "18101:3306/tcp"

@@ -1,0 +1,5 @@
+docker-compose.yaml
+config/*
+!config/dockr
+!config/dockr/data
+!config/dockr/compose.yaml

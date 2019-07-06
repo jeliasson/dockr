@@ -1,0 +1,9 @@
+language: generic
+
+sudo: required
+
+jobs:
+  include:
+
+    - stage: Running CI Script
+      script: bash app/scripts/ci.sh
