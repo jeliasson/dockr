@@ -5,7 +5,7 @@
 
 `dockr` is CLI tool for managing docker-compose files, currently building on **Ubuntu/Debian**.
 
-The goal of `dockr` is to help you administer docker-compose and your container config files in a easy and predictable way. It's main purpose is to find `compose.yaml`-files in the `config/**/` directory, verify their syntax, and merge them into one to run.
+The goal of `dockr` is to help you administer docker-compose and your container config files in a easy and predictable way. It's main purpose is to find `compose.yaml`-files in the `config/**/` directory, verify their syntax, and merge them into one to run with `docker-compose`.
 
 You may use this tool how you like. In the end, it's just merging your docker-compose files into one, and can optionally use global and app specific environment variables.
 
@@ -67,7 +67,7 @@ To create an app, run `docker create [app]`.
 App specific environment variables overrides global environment variables.
 
 ## Use Dockr
-Running `dockr run` will verify, merge and compose up your apps, e.g.
+Running `dockr run` will verify, merge and `docker-compose up` your apps, e.g.
 ```bash
 $ dr run
 
@@ -99,15 +99,16 @@ These environment variables may be used in `compose.yaml` files, e.g. `${PORT}` 
 ### Global environment variables
 It's recommended to use globally defined and generated environment variables, such as `${DATA_DIR}`, that would return the absolute `data` path to the app during merge.
 
-| Scope      | Variable      | Value | Description           |
-|----------- | ------------- | ------------- | --------------------- |
-| Global     | `PUID`        | `1000`        | Default system user id to run docker containers. |
-| Global     | `PGID`        | `1000`        | Default system group id to run docker containers. |
-| Global     | `DOCKR_DATA_PATH`        | `/[...]/dockr/config/<app>/data`        | Absolute path to apps `data` directory |
-| Global     | `DOCKR_APP_NAME`         | `[app]`        | App name during merge process of yaml files |
-| Global     | `DOCKR_APP_PATH`         | `/[...]/config/[app]`        | Absolute app path during merge process of yaml files |
-| Global     | `TZ`          | `Europe/Malta` | Timezone |
-| App        | `PORT`        | `8080`         | Example described in [Environment variables](#environment-variables). |
+| Scope      | Variable           | Value                             | Description                                            |
+|----------- | ------------------ | --------------------------------- | ------------------------------------------------------ |
+| Global     | `PUID`             | `1000`                            | Default system user id to run docker containers.       |
+| Global     | `PGID`             | `1000`                            | Default system group id to run docker containers.      |
+| Global     | `DOCKR_APP_NAME`   | `[app]`                           | App name during merge process of yaml files            |
+| Global     | `DOCKR_APP_PATH`   | `/[...]/config/[app]`             | Absolute app path during merge process of yaml files   |
+| Global     | `DOCKR_DATA_PATH`  | `/[...]/dockr/config/<app>/data`  | Absolute path to apps `data` directory                 |
+| Global     | `DOCKR_DISABLED`   | `not set`                         | Disables parse of `compose.yaml` app if env set        |
+| Global     | `TZ`               | `Europe/Malta`                    | Timezone                                               |
+| App        | `PORT`             | `8080`                            | Example described in [Environment variables](#environment-variables). |
 
 ## Use Dockr using container (experimental)
 Working on having the `dockr` command wrapped to run the dockr image, and the end result would be to use dockr without installing any dependencies locally, besides docker of course. 
