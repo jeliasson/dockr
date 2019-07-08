@@ -1,6 +1,6 @@
 {
   "name": "dockr",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A tool for helping you manage docker-compose orchestration",
   "main": "src/dockr.js",
   "scripts": {
@@ -11,7 +11,7 @@
     "type": "git",
     "url": "git+https://github.com/jeliasson/dockr.git"
   },
-  "author": "Johan Eliasson <johan@eliasson.us>",
+  "author": "Johan Eliasson <johan@eliasson.xyz>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jeliasson/dockr/issues"
