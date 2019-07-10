@@ -1,5 +1,7 @@
 docker-compose.yaml
+backup/*
 config/*
 !config/dockr
 !config/dockr/data
 !config/dockr/compose.yaml
+logs/*

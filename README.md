@@ -90,7 +90,7 @@ _In above example, both images were already built and running._
 Generated docker-compose file will be placed in the root path of dockr, by default `~/dockr/docker-compose.yaml`.
 
 #### Docker-compose and orphans
-`dockr run` will effectively run `docker-compose --remove-orphans -f ~/docker/docker-compose.yaml up` once app yaml files has been parsed. 
+`dockr run` will effectively run `docker-compose -f ~/docker/docker-compose.yaml -d --remove-orphans up` once app yaml files has been parsed. 
 
 By passing `--remove-orphans`, docker will delete containers that have been removed from the same [docker compose stack](https://docs.docker.com/get-started/part5/). In this case, containers that has been created using dockr. It will not delete containers you've created outside of dockr.
 
