@@ -26,6 +26,12 @@ program.on('command:backup', function (dir) {
 
     consola.info(`Creating backup directory...\n` + `  ${backupPath}\n`.gray)
 
+    // Create log directory
+    // @todo: Move this logic to the dockr bootstrapper
+    if (!fs.existsSync(`${path.root}/logs`)) {
+        fs.mkdirSync(`${path.root}/logs`)
+    }
+
     // Create backup root path
     if (!fs.existsSync(backupRootPath)) {
         fs.mkdirSync(backupRootPath)
