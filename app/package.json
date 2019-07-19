@@ -1,6 +1,6 @@
 {
   "name": "dockr",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A tool for helping you manage docker-compose orchestration",
   "main": "src/dockr.js",
   "scripts": {
