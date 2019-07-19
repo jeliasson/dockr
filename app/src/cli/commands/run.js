@@ -8,8 +8,10 @@ const shell = require('shelljs')
 const path = require('../../utils/path')
 const yaml = require('../../logic/yaml')
 
-program.command('run', 'verify, merge and compose up').action(async function (dir) {
-    
+program.command('run', 'verify, merge and compose up')
+
+program.on('command:run', async function (args) {
+
     consola.info('Finding yaml files in config directory...')
 
     // Try parsing the files
