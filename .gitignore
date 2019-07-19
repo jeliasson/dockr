@@ -5,3 +5,5 @@ config/*
 !config/dockr/data
 !config/dockr/compose.yaml
 logs/*
+
+npm-debug.log
