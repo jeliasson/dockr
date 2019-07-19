@@ -17,6 +17,6 @@ services:
     - /etc/localtime:/etc/localtime:ro
     - ${DOCKR_DATA_PATH}:/data
     environment:
-      TZ: ${TZ}
+      - TZ=${TZ}
     #ports:
     #- 19999:19999
