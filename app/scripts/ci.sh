@@ -32,6 +32,12 @@ dockr run
 
 echo ""
 echo "#"
+echo "# Logs for test app"
+echo "#"
+dockr logs test
+
+echo ""
+echo "#"
 echo "# Backup dockr"
 echo "#"
 dockr backup
