@@ -41,9 +41,8 @@ program.on('command:backup', function (dir) {
     if (!fs.existsSync(backupPath)) {
         fs.mkdirSync(backupPath)
     }
-
+  
     // @todo: Optionally bring down defined containers that don't seem to like backup on the fly, without using root.
-
     try {
 
         const backupLogFile = `${path.logs}/backup.log`
