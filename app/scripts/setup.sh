@@ -79,6 +79,10 @@ echo "Creating symlinks..."
 sudo ln --symbolic --force ${BIN_PATH}/dockr.sh /usr/local/bin/dockr
 sudo ln --symbolic --force ${BIN_PATH}/dockr.sh /usr/local/bin/dr
 
+# Creating symlinks to 'dockr-cli' and 'dr-cli' (Experimental)
+sudo ln --symbolic --force ${BIN_PATH}/dockr-cli.sh /usr/local/bin/dockr-cli
+sudo ln --symbolic --force ${BIN_PATH}/dockr-cli.sh /usr/local/bin/dr-cli
+
 # Finally, print the banner
 echo
 cat $APP_PATH/banner.txt
