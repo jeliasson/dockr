@@ -11,7 +11,7 @@ const yaml = require('../../logic/yaml')
 program.command('logs [app]', 'dockr logs, or dockr app logs')
 
 program.on('command:logs', function (args) {
-    
+
     // Check for arguments (i.e the app)
     if (!args[0]) {
 

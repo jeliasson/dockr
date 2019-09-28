@@ -37,7 +37,7 @@ const files = function () {
 }
 
 // Parse all yaml files and it's variables
-const parse = function(files) {
+const parse = function (files) {
 
     // Root .env config
     const rootConfigPath = `${path.config}/.env`
@@ -52,7 +52,7 @@ const parse = function(files) {
     let outputFiles = []
 
     // Foreach all identified yaml files
-    files.forEach(function(file) {
+    files.forEach(function (file) {
         consola.log(`- `.gray + `Processing ${file.app}`)
 
         // Construct a path config
@@ -67,10 +67,10 @@ const parse = function(files) {
         if (!fs.existsSync(`${dockrAppConfig.DOCKR_DATA_PATH}`)) {
 
             fs.mkdirSync(`${dockrAppConfig.DOCKR_DATA_PATH}`)
-            
+
             consola.log()
             consola.success(`Data directory for ${file.app} was missing, but it has now been created:\n` + `${dockrAppConfig.DOCKR_DATA_PATH}\n`.gray)
-            
+
         }
 
         // Get yaml file content
@@ -78,7 +78,7 @@ const parse = function(files) {
 
         // Parse it to an object
         let object = toObject(content)
-        
+
         // @todo: Add environment variable to identify dockr generated compose
         // e.g. DOCKR_GENERATED = YYYY-MM-DD HH:II:SS
 
@@ -113,7 +113,7 @@ const parse = function(files) {
         if (disabled) {
             consola.log(`  Not merging ${file.app} because of env DOCKR_DISABLED=true\n`.gray)
         } else {
-  
+
             // Replace ${VARIABLES} with those merged in config
             output = output.replace(/\$\{.*?\}/g, function (match) {
 
@@ -158,9 +158,9 @@ const parse = function(files) {
     console.log()
 
     // Generate docker compose arguments and output file
-    const outputFilesAsArgument = outputFiles.map(function(file) { return `-f ${file}` }).join(' ')
+    const outputFilesAsArgument = outputFiles.map(function (file) { return `-f ${file}` }).join(' ')
     const outputFileMerged = `${path.docker.compose}`
-    
+
     // Merge files
     const mergeCommand = `docker-compose ${outputFilesAsArgument} config > ${outputFileMerged}`
     shell.exec(mergeCommand, { silent: false })
@@ -178,9 +178,9 @@ const parse = function(files) {
 }
 
 // Parse yaml content to js-yaml
-const toObject = function(content) {
+const toObject = function (content) {
     let js = jsYaml.load(content)
-    
+
     return js
 }
 
