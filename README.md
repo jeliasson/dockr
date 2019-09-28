@@ -60,9 +60,54 @@ Options:
   -V, --version  output the version number
   -h, --help     output usage information
 
+# Dockr
+[![Build Status](https://www.travis-ci.com/jeliasson/dockr.svg?branch=master)](https://www.travis-ci.com/jeliasson/dockr)
+[![Greenkeeper badge](https://badges.greenkeeper.io/jeliasson/dockr.svg)](https://greenkeeper.io/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-success.svg)](https://opensource.org/licenses/MIT)
+
+`dockr` is CLI tool for managing docker-compose files, currently building on **Ubuntu/Debian**.
+
+The goal of `dockr` is to help you administer docker-compose and your container config files in a easy and predictable way. It's main purpose is to find `compose.yaml`-files in the `config/**/` directory, verify their syntax, and merge them into one to run with `docker-compose`.
+
+You may use this tool how you like. In the end, it's just merging your docker-compose files into one, and can optionally use global and app specific environment variables.
+
+Please note that this project is under development. While it's being used in small production, do not use this in your production environment until you feel comfortable.
+
+## Features
+* One-line installation and setup
+* Easily create a new dockr app from a template using `dockr create [app]`
+* Environment variables templating in `compose.yaml` files
+* Verify, merge and docker-compose up using `dockr run`
+* Easy update to latest version of dockr using `dockr update`
+* Shortcuts to docker logs using `dockr logs [app]`
+
+## Getting started
+### Installation
+This one-line installation currently building on **Ubuntu/Debian** using `apt` as package manager.
+Before you start the installation, make sure that `git`, `node` and `docker` is installed. 
+
+#### One-line installation
+As a general note, never trust installation scripts from unknown sources. This includes this project and repository. If you want to inspect the installation scripts, broadly see [install.sh](https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh) and [setup.sh](https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/setup.sh). You may also check out the [latest builds](https://www.travis-ci.com/jeliasson/dockr) to see what to expect.
+
+```bash
+wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null && bash install.sh
+```
+
+## Verify installation
+Make sure everything went fine by either running `dockr` or `dockr info`. You can also use the alias `dr`, e.g. `dr info`.
+```text
+$ dockr
+
+Usage: dockr [options] [command]
+
+Options:
+  -V, --version  output the version number
+  -h, --help     output usage information
+
 Commands:
   run            verify, merge and compose up
   edit [app]     edit app composer.yaml
+  logs [app]     dockr logs, or dockr app logs
   create [app]   create a new app with boilerplates
   compose [cmd]  docker-compose wrapper
   backup         make a backup of dockr
@@ -143,7 +188,6 @@ It's recommended to use globally defined and generated environment variables, su
 | Global | `DOCKR_DISABLED`  | `<not set>`                      | Disables parse of `compose.yaml` app if env set                   |
 | Global | `TZ`              | `Europe/Malta`                   | Timezone                                                          |
 | App    | `PORT`            | `8080`                           | Example described in [App variables](#App-environment-variables). |
-
 ## Use Dockr using container (experimental)
 
 Working on having the `dockr` command wrapped to run the dockr image, and the end result would be to use dockr without installing any dependencies locally, besides docker of course.

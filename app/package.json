@@ -5,13 +5,14 @@
   "main": "src/dockr.js",
   "scripts": {
     "dockr": "dockr",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "docker build -t dockr ."
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/jeliasson/dockr.git"
   },
-  "author": "Johan Eliasson <johan@eliasson.us>",
+  "author": "Johan Eliasson <johan@eliasson.xyz>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/jeliasson/dockr/issues"
@@ -23,6 +24,7 @@
     "commander": "^2.20.0",
     "consola": "^2.7.1",
     "dotenv": "^8.0.0",
+    "fs-extra": "^8.1.0",
     "js-yaml": "^3.13.1",
     "shelljs": "^0.8.3",
     "yaml": "^1.6.0",
@@ -30,10 +32,6 @@
     "yaml-validator": "^2.2.0"
   },
   "devDependencies": {
-    "eslint": "^6.0.0",
-    "eslint-plugin-import": "^2.17.3",
-    "eslint-plugin-jest": "^22.7.1",
-    "eslint-plugin-promise": "^4.1.1",
-    "eslint-plugin-react": "^7.13.0"
+
   }
 }

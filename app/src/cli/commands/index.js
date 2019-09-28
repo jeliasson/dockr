@@ -1,5 +1,6 @@
 require('./run.js')
 require('./edit.js')
+require('./logs.js')
 require('./create.js')
 require('./compose.js')
 require('./backup.js')

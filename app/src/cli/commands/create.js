@@ -13,7 +13,7 @@ program.on('command:create', function (args) {
 
     // Check for required arguments
     if (!args[0]) {
-        consola.error(`Requires one argument, the app name.\n` + `E.g. dockr create [app]`.gray)
+        consola.error(`Requires one argument, the app name, e.g.\n` + `$ `.blue + `docker logs `.gray + `[app]`.yellow)
 
         process.exit(0)
     }
