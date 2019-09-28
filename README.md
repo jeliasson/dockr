@@ -1,7 +1,6 @@
 # Dockr
 
 [![Build Status](https://www.travis-ci.com/jeliasson/dockr.svg?branch=master)](https://www.travis-ci.com/jeliasson/dockr)
-[![Greenkeeper badge](https://badges.greenkeeper.io/jeliasson/dockr.svg)](https://greenkeeper.io/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-success.svg)](https://opensource.org/licenses/MIT)
 
 `dockr` is CLI tool for managing docker-compose files, currently building on **Ubuntu/Debian**.
