@@ -63,12 +63,12 @@ Options:
 Commands:
   run            verify, merge and compose up
   edit [app]     edit app composer.yaml
-  logs [app]     dockr logs, or dockr app logs
   create [app]   create a new app with boilerplates
   compose [cmd]  docker-compose wrapper
   backup         make a backup of dockr
   config         cd to dockr config directory
   info           info about the dockr installation
+  logs [app]     dockr logs, or dockr app logs
   update         update dockr
   verify         verify syntax of all yaml files
   test           test docker-compose files
@@ -121,7 +121,7 @@ During `dockr run`, when generating app docker-compose files, dockr will bring e
 
 ### App environment variables
 
-Environment variables is defined by creating a `.env` file in your app directory. Example syntax that would set environment variable `PORT` to value `8080`.
+Environment variables is defined in the `.env` file in your app directory. If you created the app using `dockr run`, this file has been created for you. Example syntax that would set environment variable `PORT` to value `8080`.
 
 ```bash
 PORT=8080
