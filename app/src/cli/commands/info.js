@@ -19,6 +19,9 @@ program.on('command:info', function (dir) {
     consola.info(`Gathering information about dockr and it's dependencies...`)
     console.log()
 
+    const dockerVersion = nonl(shell.exec(`docker version | grep 'Version:' | head -1 | awk '{ print $2 }'`, { silent: true }))
+    const dockerComposeVersion = nonl(shell.exec(`docker-compose version | grep 'docker-compose' | awk '{ print $3}' | cut -d ',' -f1`, { silent: true }))
+
     const nodeVersion = nonl(shell.exec(`node -v`, { silent: true }))
     const npmModules = nonl(shell.exec(`ls -lA ${path.app.root}/node_modules | wc -l`, { silent: true }))
     const npmVersion = nonl(shell.exec(`npm -v`, { silent: true }))
@@ -26,6 +29,14 @@ program.on('command:info', function (dir) {
     consola.info(`Dockr`)
     console.log(`- Version: ${package.version}`)
     console.log(`- Repository: ${package.repository.url}`)
+    console.log()
+
+    consola.info(`Docker`)
+    console.log(`- Version: ${dockerVersion}`)
+    console.log()
+
+    consola.info(`Docker Compose`)
+    console.log(`- Version: ${dockerComposeVersion}`)
     console.log()
 
     consola.info(`Node`)
