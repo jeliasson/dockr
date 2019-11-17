@@ -1,5 +1,4 @@
 const consola = require('consola')
-const colors = require('colors')
 
 const program = require('commander')
 const shell = require('shelljs')
@@ -13,7 +12,7 @@ program.on('command:compose', function (args) {
     // Check for required arguments
     if (!args[0]) {
         consola.error(`Requires one argument, e.g 'up' or 'down'`)
-        
+
         process.exit(1)
     }
 

@@ -11,10 +11,10 @@ program.command('backup', 'make a backup of dockr')
 
 program.on('command:backup', function (dir) {
 
-    consola.warn('This command is not yet implemented')
+    consola.warn('This command is not yet completed')
 
     consola.log()
-    
+
     // Instance date
     const date = new Date()
 
@@ -41,7 +41,7 @@ program.on('command:backup', function (dir) {
     if (!fs.existsSync(backupPath)) {
         fs.mkdirSync(backupPath)
     }
-  
+
     // @todo: Optionally bring down defined containers that don't seem to like backup on the fly, without using root.
     try {
 
@@ -63,6 +63,6 @@ program.on('command:backup', function (dir) {
 
         process.exit(1)
     }
-     
+
     process.exit(0)
 })
