@@ -13,8 +13,6 @@ program.command('restart', 'restart all docker containers')
 
 program.on('command:restart', function (dir) {
 
-    consola.warn('This command is not yet completed')
-
     if (!shell.which('docker-compose')) {
         consola.error('Sorry, this command requires docker-compose');
 
@@ -23,16 +21,15 @@ program.on('command:restart', function (dir) {
 
     const runningContainers = shell.exec(`docker ps --format "{{.Names}}"`, { silent: true });
     let runningContainersSplit = runningContainers.split('\n');
-    console.log(runningContainersSplit);
 
     runningContainersSplit.forEach(function (container) {
 
         if (container) {
 
             console.log(`Restarting ${container}...`)
-            if (shell.exec(`docker restart ${container} 2>&1 > /dev/null`).code !== 0) {
+            if (shell.exec(`docker restart ${container} 2>&1 > /dev/null`, { async: true }).code !== 0) {
 
-                consola.info(`${container} does not seem to be running...?`)
+                //consola.info(`${container} does not seem to be running...?`)
 
             }
         }
