@@ -1,9 +1,7 @@
 const consola = require('consola')
-const colors = require('colors')
 
 const fs = require('fs')
 const program = require('commander')
-const shell = require('shelljs')
 
 const path = require('../../utils/path')
 
