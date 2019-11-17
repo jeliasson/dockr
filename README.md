@@ -23,6 +23,7 @@ Please note that this project is under development. While it's being used in sma
     -   [App variables](#App-environment-variables)
     -   [Global variables](#Global-environment-variables)
 -   [Contribute](#Contribute)
+    -   [Development](#Development)
 
 ## Features
 
@@ -166,3 +167,7 @@ docker-compose --remove-orphans -f ./app/docker-compose.yaml up
 ## Contribute
 
 Feel free to fork and send a [Pull Request](pulls/) if you see something that can be made better. ❤️
+
+### Development
+
+To setup your development dockr, run `sh ./app/scripts/install-dev.sh`. What's different between the original installation script is basically checking out the dev-branch.
