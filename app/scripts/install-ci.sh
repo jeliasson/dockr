@@ -32,6 +32,12 @@ dockr run
 
 echo ""
 echo "#"
+echo "# Restart docker containers"
+echo "#"
+dockr restart
+
+echo ""
+echo "#"
 echo "# Logs for test app"
 echo "#"
 dockr logs test
