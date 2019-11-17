@@ -21,24 +21,21 @@ program.on('command:restart', function (dir) {
         process.exit(1);
     }
 
-    const runningContainerIds = shell.exec(`docker ps -q`, { silent: true });
-    let runningContainerIdsSplit = runningContainerIds.split('\n');
-    console.log(runningContainerIdsSplit);
+    const runningContainers = shell.exec(`docker ps --format "{{.Names}}"`, { silent: true });
+    let runningContainersSplit = runningContainers.split('\n');
+    console.log(runningContainersSplit);
 
-    runningContainerIdsSplit.forEach(function (id) {
+    runningContainersSplit.forEach(function (container) {
 
-        let runningContainerInspect = shell.exec(`docker inspect --format='{{.Name}}' $(sudo docker ps -aq --no-trunc) ${id}`);
-        console.log(runningContainerInspect);
+        if (container) {
 
-        console.log(`Restarting ${id}...`)
-        // docker inspect --format='{{.Name}}' $(sudo docker ps -aq --no-trunc)
+            console.log(`Restarting ${container}...`)
+            if (shell.exec(`docker restart ${container} 2>&1 > /dev/null`).code !== 0) {
 
-        if (shell.exec(`docker restart ${id} 2>&1 > /dev/null`).code !== 0) {
+                consola.info(`${container} does not seem to be running...?`)
 
-            consola.info(`${id} does not seem to be running...?`)
-
+            }
         }
-
 
     })
 
