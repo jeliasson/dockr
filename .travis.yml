@@ -6,4 +6,4 @@ jobs:
   include:
 
     - stage: Running CI Script
-      script: bash app/scripts/ci.sh
+      script: bash app/scripts/install-ci.sh
