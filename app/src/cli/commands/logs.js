@@ -10,37 +10,35 @@ const yaml = require('../../logic/yaml')
 
 program.command('logs [app]', 'dockr logs, or dockr app logs')
 
-program.on('command:logs', function (args) {
+program.on('command:logs', function(args) {
+	// Check for arguments (i.e the app)
+	if (!args[0]) {
+		consola.warn(`This command is work in progress.`)
+		consola.info(`Logs for dockr is yet not done.`)
 
-    // Check for arguments (i.e the app)
-    if (!args[0]) {
+		consola.log()
+		consola.info(`To show logs of apps, i.e. docker-compose logs, run: `)
+		consola.log(`$ `.blue + `docker logs `.gray + `[app]`.yellow + `\n`)
 
-        consola.warn(`This command is work in progress.`)
-        consola.info(`Logs for dockr is yet not done.`)
+		const cmd = `docker-compose -f ${path.docker.compose} logs --follow`
 
-        consola.log()
-        consola.info(`To show logs of apps, i.e. docker-compose logs, run: `);
-        consola.log(`$ `.blue + `docker logs `.gray + `[app]`.yellow + `\n`)
+		consola.info(
+			`Instead of not showing anything, in 10 seconds you'll see logs of all apps...`
+		)
 
-        const cmd = `docker-compose -f ${path.docker.compose} logs --follow`;
+		consola.log(`$ `.blue + `${cmd} `.gray)
 
-        consola.info(`Instead of not showing anything, in 10 seconds you'll see logs of all apps...`)
+		shell.exec(`sleep 10`, { silent: false })
 
-        consola.log(`$ `.blue + `${cmd} `.gray)
+		shell.exec(cmd, { silent: false })
+	} else {
+		const app = args[0]
+		const follow = args[1] ? '--follow' : '' // @todo: Actual arguments
 
-        shell.exec(`sleep 10`, { silent: false })
+		const cmd = `docker-compose -f ${path.docker.compose} ${follow} logs --follow ${app}`
+		consola.info(`Running ${cmd}`)
+		shell.exec(cmd, { silent: false })
+	}
 
-        shell.exec(cmd, { silent: false })
-
-    } else {
-
-        const app = args[0]
-        const follow = (args[1]) ? '--follow' : '' // @todo: Actual arguments
-
-        const cmd = `docker-compose -f ${path.docker.compose} ${follow} logs --follow ${app}`;
-        consola.info(`Running ${cmd}`)
-        shell.exec(cmd, { silent: false })
-    }
-
-    process.exit(0)
+	process.exit(0)
 })

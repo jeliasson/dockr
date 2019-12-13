@@ -1,9 +1,9 @@
 version: "3.7"
 services:
-  ${DOCKR_APP_NAME}:
+  ${{DOCKR_APP_NAME}}:
     image: nginxdemos/hello
-    container_name: ${DOCKR_APP_NAME}
+    container_name: ${{DOCKR_APP_NAME}}
     restart: "unless-stopped"
-    user: "${PUID}:${PGID}"
+    user: "${{PUID}}:${{PGID}}"
     environment:
-      TZ: "${TZ}"
+      TZ: "${{TZ}}"

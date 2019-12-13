@@ -12,181 +12,186 @@ const jsYaml = require('js-yaml')
 const path = require('../utils/path')
 
 // Get yaml files
-const files = function () {
-    const yamlPattern = /.*\/dockr\/config\/([a-zA-Z0-9\-\_]{1,})\/([a-zA-Z0-9\-\_]{1,})\.yaml$/
-    const files = []
+const files = function() {
+	const yamlPattern = /.*\/dockr\/config\/([a-zA-Z0-9\-\_]{1,})\/([a-zA-Z0-9\-\_]{1,})\.yaml$/
+	const files = []
 
-    shell.find(path.config).filter(function (file) {
-        let match = file.match(yamlPattern)
+	shell.find(path.config).filter(function(file) {
+		let match = file.match(yamlPattern)
 
-        if (match !== null) {
+		if (match !== null) {
+			const path = match[0]
+			const app = match[1]
+			const file = match[2]
 
-            const path = match[0]
-            const app = match[1]
-            const file = match[2]
+			files.push({
+				path,
+				app,
+				file,
+			})
+		}
+	})
 
-            files.push({
-                path,
-                app,
-                file,
-            })
-        }
-    })
-
-    return files
+	return files
 }
 
 // Parse all yaml files and it's variables
-const parse = function (files) {
+const parse = function(files) {
+	// Root .env config
+	const rootConfigPath = `${path.config}/.env`
+	const rootConfig = require('dotenv').config({ path: rootConfigPath })
 
-    // Root .env config
-    const rootConfigPath = `${path.config}/.env`
-    const rootConfig = require('dotenv').config({ path: rootConfigPath })
+	// Create output directory if not already exists
+	const outputPath = `${path.app.tmp}/yaml-parse-staging`
+	if (!fs.existsSync(outputPath)) {
+		fs.mkdirSync(outputPath, 0700)
+	}
 
-    // Create output directory if not already exists
-    const outputPath = `${path.app.tmp}/yaml-parse-staging`
-    if (!fs.existsSync(outputPath)) {
-        fs.mkdirSync(outputPath, 0700);
-    }
+	let outputFiles = []
 
-    let outputFiles = []
+	// Foreach all identified yaml files
+	files.forEach(function(file) {
+		consola.log(`- `.gray + `Processing ${file.app}`)
 
-    // Foreach all identified yaml files
-    files.forEach(function (file) {
-        consola.log(`- `.gray + `Processing ${file.app}`)
+		// Construct a path config
+		let dockrAppConfig = {
+			DOCKR_APP_NAME: `${file.app}`,
+			DOCKR_APP_PATH: `${path.config}/${file.app}`,
+			DOCKR_DATA_PATH: `${path.config}/${file.app}/data`,
+			DOCKR_CONFIG_PATH: `${path.config}/${file.app}`,
+		}
 
-        // Construct a path config
-        let dockrAppConfig = {
-            DOCKR_APP_NAME: `${file.app}`,
-            DOCKR_APP_PATH: `${path.config}/${file.app}`,
-            DOCKR_DATA_PATH: `${path.config}/${file.app}/data`,
-            DOCKR_CONFIG_PATH: `${path.config}/${file.app}`
-        }
+		// Verify that the data directory exists
+		if (!fs.existsSync(`${dockrAppConfig.DOCKR_DATA_PATH}`)) {
+			fs.mkdirSync(`${dockrAppConfig.DOCKR_DATA_PATH}`)
 
-        // Verify that the data directory exists
-        if (!fs.existsSync(`${dockrAppConfig.DOCKR_DATA_PATH}`)) {
+			consola.log()
+			consola.success(
+				`Data directory for ${file.app} was missing, but it has now been created:\n` +
+					`${dockrAppConfig.DOCKR_DATA_PATH}\n`.gray
+			)
+		}
 
-            fs.mkdirSync(`${dockrAppConfig.DOCKR_DATA_PATH}`)
+		// Get yaml file content
+		let content = fs.readFileSync(file.path, 'utf8')
 
-            consola.log()
-            consola.success(`Data directory for ${file.app} was missing, but it has now been created:\n` + `${dockrAppConfig.DOCKR_DATA_PATH}\n`.gray)
+		// Parse it to an object
+		let object = toObject(content)
 
-        }
+		// @todo: Add environment variable to identify dockr generated compose
+		// e.g. DOCKR_GENERATED = YYYY-MM-DD HH:II:SS
 
-        // Get yaml file content
-        let content = fs.readFileSync(file.path, 'utf8');
+		// Stringify the object (parsed by the YAML library)
+		let yaml = YAML.stringify(object)
 
-        // Parse it to an object
-        let object = toObject(content)
+		let config = {}
+		let disabled = false
+		let output = yaml
 
-        // @todo: Add environment variable to identify dockr generated compose
-        // e.g. DOCKR_GENERATED = YYYY-MM-DD HH:II:SS
+		// App .env config
+		let appConfigPath = `${path.config}/${file.app}/.env`
 
-        // Stringify the object (parsed by the YAML library)
-        let yaml = YAML.stringify(object)
+		if (fs.existsSync(appConfigPath)) {
+			// Get applicaton .env
+			let appConfig = require('dotenv').config({ path: appConfigPath })
 
-        let config = {}
-        let disabled = false
-        let output = yaml
+			// Disable parsing if env DISABLED is set to true
+			disabled = appConfig.parsed.DOCKR_DISABLED ? true : false
 
-        // App .env config
-        let appConfigPath = `${path.config}/${file.app}/.env`
+			// Merge root, application and path config
+			config = Object.assign(
+				rootConfig.parsed,
+				dockrAppConfig,
+				appConfig.parsed
+			)
+		} else {
+			// Merge root and path config
+			config = Object.assign(rootConfig.parsed, dockrAppConfig)
+		}
 
-        if (fs.existsSync(appConfigPath)) {
+		// Return if DISABLED is set to true
+		if (disabled) {
+			consola.log(
+				`  Not merging ${file.app} because of env DOCKR_DISABLED=true\n`
+					.gray
+			)
+		} else {
+			// Replace ${VARIABLES} with those merged in config
+			output = output.replace(/\$\{\{.*?\}\}/g, function(match) {
+				// Get the actual environment variable
+				let variable = /\$\{\{(.*?)\}\}/g
+				let exec = variable.exec(match)
+				let env = exec[1]
 
-            // Get applicaton .env
-            let appConfig = require('dotenv').config({ path: appConfigPath })
+				// Return dotenv variable if not undefined, otherwise set '!!! undefined-env !!!'
+				if (typeof config[env] != 'undefined') {
+					let value = config[env]
+				} else {
+					let value = '!!! undefined-env !!!'
 
-            // Disable parsing if env DISABLED is set to true
-            disabled = appConfig.parsed.DOCKR_DISABLED ? true : false
+					consola.error(
+						`Use of undefined env ${env} in ${file.app}'s compose.yaml\nAdd ${env}=<value> in ${appConfigPath}`
+					)
 
-            // Merge root, application and path config
-            config = Object.assign(rootConfig.parsed, dockrAppConfig, appConfig.parsed)
+					process.exit(1)
+				}
+				let value =
+					typeof config[env] != 'undefined'
+						? config[env]
+						: '!!! undefined-env !!!'
 
-        } else {
+				// @todo: Att verbosity level
+				//consola.log(`- Replaced ${env} with ${value}`)
 
-            // Merge root and path config
-            config = Object.assign(rootConfig.parsed, dockrAppConfig)
-        }
+				return value
+			})
 
-        // Return if DISABLED is set to true
-        if (disabled) {
-            consola.log(`  Not merging ${file.app} because of env DOCKR_DISABLED=true\n`.gray)
-        } else {
+			// @todo Fix a way to either merge who docker compose correctly, or continue below
+			output.split('\n').map(function(ln) {
+				return `\t${ln}`
+			})
 
-            // Replace ${VARIABLES} with those merged in config
-            output = output.replace(/\$\{.*?\}/g, function (match) {
+			// Save final yaml file
+			let outputFile = `${outputPath}/${file.app}-${file.file}.yaml`
+			fs.writeFileSync(outputFile, output)
+			outputFiles.push(outputFile)
+		}
+	})
+	console.log()
 
-                // Get the actual environment variable
-                let variable = /\$\{(.*?)\}/g
-                let exec = variable.exec(match)
-                let env = exec[1]
+	// Generate docker compose arguments and output file
+	const outputFilesAsArgument = outputFiles
+		.map(function(file) {
+			return `-f ${file}`
+		})
+		.join(' ')
+	const outputFileMerged = `${path.docker.compose}`
 
-                // Return dotenv variable if not undefined, otherwise set '!!! undefined-env !!!'
-                if (typeof (config[env]) != "undefined") {
-                    let value = config[env]
-                } else {
-                    let value = '!!! undefined-env !!!'
+	// Merge files
+	const mergeCommand = `docker-compose ${outputFilesAsArgument} config > ${outputFileMerged}`
+	shell.exec(mergeCommand, { silent: false })
 
-                    consola.error(`Use of undefined env ${env} in ${file.app}'s compose.yaml\nAdd ${env}=<value> in ${appConfigPath}`)
-
-                    process.exit(1)
-                }
-                let value = (typeof (config[env]) != "undefined") ?
-                    (config[env]) :
-                    '!!! undefined-env !!!'
-
-                // @todo: Att verbosity level
-                //consola.log(`- Replaced ${env} with ${value}`)
-
-                return value
-            });
-
-
-            // @todo Fix a way to either merge who docker compose correctly, or continue below
-            output.split('\n').map(function (ln) {
-                return `\t${ln}`
-            });
-
-            // Save final yaml file
-            let outputFile = `${outputPath}/${file.app}-${file.file}.yaml`
-            fs.writeFileSync(outputFile, output)
-            outputFiles.push(outputFile)
-
-        }
-    })
-    console.log()
-
-    // Generate docker compose arguments and output file
-    const outputFilesAsArgument = outputFiles.map(function (file) { return `-f ${file}` }).join(' ')
-    const outputFileMerged = `${path.docker.compose}`
-
-    // Merge files
-    const mergeCommand = `docker-compose ${outputFilesAsArgument} config > ${outputFileMerged}`
-    shell.exec(mergeCommand, { silent: false })
-
-    // Clean up
-    /*
+	// Clean up
+	/*
     outputFiles.forEach(function(file) {
         fs.unlinkSync(file)
     })
     */
 
-    consola.success('Merge of files completed.')
+	consola.success('Merge of files completed.')
 
-    return outputFileMerged
+	return outputFileMerged
 }
 
 // Parse yaml content to js-yaml
-const toObject = function (content) {
-    let js = jsYaml.load(content)
+const toObject = function(content) {
+	let js = jsYaml.load(content)
 
-    return js
+	return js
 }
 
-
 module.exports = {
-    files,
-    parse,
-    toObject
+	files,
+	parse,
+	toObject,
 }

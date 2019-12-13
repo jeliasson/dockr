@@ -11,46 +11,59 @@ const package = require('../../../package.json')
 
 program.command('info', 'info about the dockr installation')
 
-program.on('command:info', function (dir) {
+program.on('command:info', function(dir) {
+	consola.warn(`This command is work in progress.`)
 
-    consola.warn(`This command is work in progress.`)
+	consola.info(`Gathering information about dockr and it's dependencies...`)
+	console.log()
 
-    consola.info(`Gathering information about dockr and it's dependencies...`)
-    console.log()
+	const dockerVersion = nonl(
+		shell.exec(
+			`docker version | grep 'Version:' | head -1 | awk '{ print $2 }'`,
+			{ silent: true }
+		)
+	)
+	const dockerComposeVersion = nonl(
+		shell.exec(
+			`docker-compose version | grep 'docker-compose' | awk '{ print $3}' | cut -d ',' -f1`,
+			{ silent: true }
+		)
+	)
 
-    const dockerVersion = nonl(shell.exec(`docker version | grep 'Version:' | head -1 | awk '{ print $2 }'`, { silent: true }))
-    const dockerComposeVersion = nonl(shell.exec(`docker-compose version | grep 'docker-compose' | awk '{ print $3}' | cut -d ',' -f1`, { silent: true }))
+	const nodeVersion = nonl(shell.exec(`node -v`, { silent: true }))
+	const npmModules = nonl(
+		shell.exec(`ls -lA ${path.app.root}/node_modules | wc -l`, {
+			silent: true,
+		})
+	)
+	const npmVersion = nonl(shell.exec(`npm -v`, { silent: true }))
 
-    const nodeVersion = nonl(shell.exec(`node -v`, { silent: true }))
-    const npmModules = nonl(shell.exec(`ls -lA ${path.app.root}/node_modules | wc -l`, { silent: true }))
-    const npmVersion = nonl(shell.exec(`npm -v`, { silent: true }))
+	consola.info(`Dockr`)
+	console.log(`- Version: ${package.version}`)
+	console.log(`- Repository: ${package.repository.url}`)
+	console.log()
 
-    consola.info(`Dockr`)
-    console.log(`- Version: ${package.version}`)
-    console.log(`- Repository: ${package.repository.url}`)
-    console.log()
+	consola.info(`Docker`)
+	console.log(`- Version: ${dockerVersion}`)
+	console.log()
 
-    consola.info(`Docker`)
-    console.log(`- Version: ${dockerVersion}`)
-    console.log()
+	consola.info(`Docker Compose`)
+	console.log(`- Version: ${dockerComposeVersion}`)
+	console.log()
 
-    consola.info(`Docker Compose`)
-    console.log(`- Version: ${dockerComposeVersion}`)
-    console.log()
+	consola.info(`Node`)
+	console.log(`- Version: ${nodeVersion}`)
+	console.log()
 
-    consola.info(`Node`)
-    console.log(`- Version: ${nodeVersion}`)
-    console.log()
+	consola.info(`NPM`)
+	console.log(`- Version: ${npmVersion}`)
+	console.log(`- Project dependencies: ${npmModules}`)
+	console.log()
 
-    consola.info(`NPM`)
-    console.log(`- Version: ${npmVersion}`)
-    console.log(`- Project dependencies: ${npmModules}`)
-    console.log()
+	consola.info(`Detected compose files`)
+	yaml.files().forEach(function(yaml) {
+		console.log(`- ${yaml.app} (${yaml.file}.yaml)`)
+	})
 
-    consola.info(`Detected compose files`)
-    yaml.files().forEach(function (yaml) {
-        console.log(`- ${yaml.app} (${yaml.file}.yaml)`)
-    })
-
-    process.exit(0)
+	process.exit(0)
 })
