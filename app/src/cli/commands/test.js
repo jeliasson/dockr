@@ -5,7 +5,6 @@ const async = require('async')
 const fs = require('fs')
 const program = require('commander')
 
-
 const yamlValidator = require('yaml-validator')
 const yamlLint = require('yaml-lint')
 const jsYaml = require('js-yaml')
@@ -15,13 +14,12 @@ const yaml = require('../../logic/yaml')
 
 program.command('test', 'test docker-compose files')
 
-program.on('command:test', function () {
+program.on('command:test', function() {
+	consola.warn('This command is not yet implemented')
+	consola.info(`Linting yaml files...`)
 
-    consola.warn('This command is not yet implemented')
-    consola.info(`Linting yaml files...`)
+	const parse = yaml.parse(yaml.files())
+	console.log(parse)
 
-    const parse = yaml.parse(yaml.files())
-    console.log(parse)
-    
-    process.exit(0)
+	process.exit(0)
 })

@@ -9,60 +9,67 @@ const path = require('../../utils/path')
 
 program.command('backup', 'make a backup of dockr')
 
-program.on('command:backup', function (dir) {
+program.on('command:backup', function(dir) {
+	consola.warn('This command is not yet completed')
 
-    consola.warn('This command is not yet completed')
+	consola.log()
 
-    consola.log()
+	// Instance date
+	const date = new Date()
 
-    // Instance date
-    const date = new Date()
+	// Root backup path
+	const backupRootPath = `${path.backup}`
 
-    // Root backup path
-    const backupRootPath = `${path.backup}`
+	// Backup path backup/YYYYMMDD_HHMMSS
+	const backupPath = `${backupRootPath}/${date
+		.toISOString()
+		.split('T')[0]
+		.replace(/-/g, '') +
+		'_' +
+		date.getHours() +
+		date.getMinutes() +
+		date.getSeconds()}`
 
-    // Backup path backup/YYYYMMDD_HHMMSS
-    const backupPath = `${backupRootPath}/${date.toISOString().split('T')[0].replace(/-/g, '') + '_' + date.getHours() + date.getMinutes() + date.getSeconds()}`
+	consola.info(`Creating backup directory...\n` + `  ${backupPath}\n`.gray)
 
-    consola.info(`Creating backup directory...\n` + `  ${backupPath}\n`.gray)
+	// Create log directory
+	// @todo: Move this logic to the dockr bootstrapper
+	if (!fs.existsSync(`${path.root}/logs`)) {
+		fs.mkdirSync(`${path.root}/logs`)
+	}
 
-    // Create log directory
-    // @todo: Move this logic to the dockr bootstrapper
-    if (!fs.existsSync(`${path.root}/logs`)) {
-        fs.mkdirSync(`${path.root}/logs`)
-    }
+	// Create backup root path
+	if (!fs.existsSync(backupRootPath)) {
+		fs.mkdirSync(backupRootPath)
+	}
 
-    // Create backup root path
-    if (!fs.existsSync(backupRootPath)) {
-        fs.mkdirSync(backupRootPath)
-    }
+	// Create backup path
+	if (!fs.existsSync(backupPath)) {
+		fs.mkdirSync(backupPath)
+	}
 
-    // Create backup path
-    if (!fs.existsSync(backupPath)) {
-        fs.mkdirSync(backupPath)
-    }
+	// @todo: Optionally bring down defined containers that don't seem to like backup on the fly, without using root.
+	try {
+		const backupLogFile = `${path.logs}/backup.log`
+		const backupCommand = `cp -rv "${path.config}" "${backupPath}" >> ${backupLogFile}`
 
-    // @todo: Optionally bring down defined containers that don't seem to like backup on the fly, without using root.
-    try {
+		consola.info(
+			`Creating backup...\n` + `$ `.blue + `${backupCommand}`.gray + `\n`
+		)
 
-        const backupLogFile = `${path.logs}/backup.log`
-        const backupCommand = `cp -rv "${path.config}" "${backupPath}" >> ${backupLogFile}`
+		if (shell.exec(`${backupCommand}`).code !== 0) {
+			consola.warn(
+				`Something went wrong during copy of backup. See details above.`
+			)
+		}
 
-        consola.info(`Creating backup...\n` + `$ `.blue + `${backupCommand}`.gray + `\n`)
+		consola.success(`Backup completed!`)
+	} catch (err) {
+		consola.error(`An exception was caught during backup :(`)
+		console.error(err)
 
-        if (shell.exec(`${backupCommand}`).code !== 0) {
-            consola.warn(`Something went wrong during copy of backup. See details above.`)
-        }
+		process.exit(1)
+	}
 
-        consola.success(`Backup completed!`)
-
-    } catch (err) {
-
-        consola.error(`An exception was caught during backup :(`)
-        console.error(err)
-
-        process.exit(1)
-    }
-
-    process.exit(0)
+	process.exit(0)
 })

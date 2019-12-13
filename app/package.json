@@ -1,35 +1,35 @@
 {
-    "name": "dockr",
-    "version": "0.2.4",
-    "description": "A tool for helping you manage docker-compose orchestration",
-    "main": "src/dockr.js",
-    "scripts": {
-        "dockr": "dockr",
-        "test": "echo \"Error: no test specified\" && exit 1",
-        "build": "docker build -t dockr ."
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/jeliasson/dockr.git"
-    },
-    "author": "Johan Eliasson <johan@eliasson.xyz>",
-    "license": "MIT",
-    "bugs": {
-        "url": "https://github.com/jeliasson/dockr/issues"
-    },
-    "homepage": "https://github.com/jeliasson/dockr#readme",
-    "dependencies": {
-        "async": "^3.0.1",
-        "colors": "^1.3.3",
-        "commander": "^2.20.0",
-        "consola": "^2.7.1",
-        "dotenv": "^8.0.0",
-        "fs-extra": "^8.1.0",
-        "js-yaml": "^3.13.1",
-        "shelljs": "^0.8.3",
-        "yaml": "^1.6.0",
-        "yaml-lint": "^1.2.4",
-        "yaml-validator": "^2.2.0"
-    },
-    "devDependencies": {}
+	"name": "dockr",
+	"version": "0.3.0",
+	"description": "A tool for helping you manage docker-compose orchestration",
+	"main": "src/dockr.js",
+	"scripts": {
+		"dockr": "dockr",
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"build": "docker build -t dockr ."
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/jeliasson/dockr.git"
+	},
+	"author": "Johan Eliasson <johan@eliasson.xyz>",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/jeliasson/dockr/issues"
+	},
+	"homepage": "https://github.com/jeliasson/dockr#readme",
+	"dependencies": {
+		"async": "^3.0.1",
+		"colors": "^1.3.3",
+		"commander": "^2.20.0",
+		"consola": "^2.7.1",
+		"dotenv": "^8.0.0",
+		"fs-extra": "^8.1.0",
+		"js-yaml": "^3.13.1",
+		"shelljs": "^0.8.3",
+		"yaml": "^1.6.0",
+		"yaml-lint": "^1.2.4",
+		"yaml-validator": "^2.2.0"
+	},
+	"devDependencies": {}
 }

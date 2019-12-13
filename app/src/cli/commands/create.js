@@ -7,77 +7,78 @@ const path = require('../../utils/path')
 
 program.command('create [app]', 'create a new app with boilerplates')
 
-program.on('command:create', function (args) {
+program.on('command:create', function(args) {
+	// Check for required arguments
+	if (!args[0]) {
+		consola.error(
+			`Requires one argument, the app name, e.g.\n` +
+				`$ `.blue +
+				`docker logs `.gray +
+				`[app]`.yellow
+		)
 
-    // Check for required arguments
-    if (!args[0]) {
-        consola.error(`Requires one argument, the app name, e.g.\n` + `$ `.blue + `docker logs `.gray + `[app]`.yellow)
+		process.exit(0)
+	}
 
-        process.exit(0)
-    }
+	const appName = args[0]
+	const appPath = `${path.config}/${appName}`
+	const dockerComposeTemplatePath = `${path.app.templates}/docker-compose`
 
-    const appName = args[0]
-    const appPath = `${path.config}/${appName}`
-    const dockerComposeTemplatePath = `${path.app.templates}/docker-compose`
+	try {
+		// @todo: Make a retroactive copydir
+		if (!fs.existsSync(`${appPath}`)) {
+			// Create app root directory
+			fs.mkdirSync(`${appPath}`)
 
-    try {
+			// Create data directory
+			if (!fs.existsSync(`${appPath}/data`)) {
+				fs.mkdirSync(`${appPath}/data`)
+			}
 
-        // @todo: Make a retroactive copydir
-        if (!fs.existsSync(`${appPath}`)) {
+			// Files
+			const files = [`compose.yaml`, `.env`]
 
-            // Create app root directory
-            fs.mkdirSync(`${appPath}`)
+			// Copy
+			files.forEach(function(file) {
+				if (!fs.existsSync(`${appPath}/${file}`)) {
+					fs.copyFileSync(
+						`${dockerComposeTemplatePath}/${file}`,
+						`${appPath}/${file}`
+					)
+				}
+			})
 
-            // Create data directory
-            if (!fs.existsSync(`${appPath}/data`)) {
-                fs.mkdirSync(`${appPath}/data`)
-            }
+			// Get yaml file content
+			let content = fs.readFileSync(`${appPath}/compose.yaml`, 'utf8')
 
-            // Files
-            const files = [
-                `compose.yaml`,
-                `.env`
-            ]
+			// Replacements
+			const replacements = {
+				APP: `${appName}`,
+			}
 
-            // Copy
-            files.forEach(function (file) {
-                if (!fs.existsSync(`${appPath}/${file}`)) {
-                    fs.copyFileSync(`${dockerComposeTemplatePath}/${file}`, `${appPath}/${file}`)
-                }
-            })
+			// Replace __VARIABLES__ with those in replacements
+			output = content.replace(/\_\_.*?\_\_/g, function(match) {
+				// Get the actual environment variable
+				let variable = /\_\_(.*?)\_\_/g
+				let exec = variable.exec(match)
+				let env = exec[1]
 
-            // Get yaml file content
-            let content = fs.readFileSync(`${appPath}/compose.yaml`, 'utf8');
+				return replacements[env]
+			})
 
-            // Replacements
-            const replacements = {
-                APP: `${appName}`
-            }
+			consola.success(
+				`Created app '${appName}' in directory ${path.config}/${appName}`
+			)
 
-            // Replace __VARIABLES__ with those in replacements
-            output = content.replace(/\_\_.*?\_\_/g, function (match) {
+			process.exit(0)
+		} else {
+			consola.error(`${appName} already exists. Aborting.`)
 
-                // Get the actual environment variable
-                let variable = /\_\_(.*?)\_\_/g
-                let exec = variable.exec(match)
-                let env = exec[1]
+			process.exit(1)
+		}
+	} catch (err) {
+		consola.log(err)
+	}
 
-                return replacements[env]
-            });
-
-            consola.success(`Created app '${appName}' in directory ${path.config}/${appName}`)
-
-            process.exit(0)
-
-        } else {
-            consola.error(`${appName} already exists. Aborting.`)
-
-            process.exit(1)
-        }
-    }
-    catch (err) {
-        consola.log(err)
-    }
-
-    process.exit(0)
+	process.exit(0)
 })

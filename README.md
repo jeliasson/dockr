@@ -1,4 +1,4 @@
-# Dockr
+## Dockr
 
 [![Build Status](https://www.travis-ci.com/jeliasson/dockr.svg?branch=master)](https://www.travis-ci.com/jeliasson/dockr)
 [![License: MIT](https://img.shields.io/badge/License-MIT-success.svg)](https://opensource.org/licenses/MIT)
@@ -11,27 +11,33 @@ You may use this tool how you like. In the end, it's just merging your docker-co
 
 Please note that this project is under development. While it's being used in small production, do not use this in your production environment until you feel comfortable.
 
-#### Topics
 
--   [Features](#Features)
--   [Getting Started](#Getting-started)
-    -   [Installation](#Installation)
-        -   [Verify installation](#Verify-installation)
-    -   [Create an app](#Create-an-app)
-    -   [Use dockr](#Use-dockr)
--   [Environment](#Environment)
-    -   [App variables](#App-environment-variables)
-    -   [Global variables](#Global-environment-variables)
--   [Contribute](#Contribute)
-    -   [Development](#Development)
+- [Dockr](#dockr)
+- [Features](#features)
+- [Getting started](#getting-started)
+  - [Installation](#installation)
+    - [One-line installation](#one-line-installation)
+- [Verify installation](#verify-installation)
+- [Create an app](#create-an-app)
+- [Use Dockr](#use-dockr)
+    - [Generated docker-compose.yaml](#generated-docker-composeyaml)
+    - [Docker-compose and orphans](#docker-compose-and-orphans)
+- [Environment](#environment)
+  - [App environment variables](#app-environment-variables)
+  - [Global environment variables](#global-environment-variables)
+- [Use Dockr using container (experimental)](#use-dockr-using-container-experimental)
+    - [docker run](#docker-run)
+    - [docker-compose (Example)](#docker-compose-example)
+- [Contribute](#contribute)
+  - [Development](#development)
 
 ## Features
 
--   One-line installation and setup
--   Easily create a new dockr app from a template using `dockr run [app]`
--   Environment variables templating in `compose.yaml` files
--   Verify, merge and docker-compose up using `dockr run`
--   Easy update to latest version of dockr using `dockr update`
+- One-line installation and setup
+- Easily create a new dockr app from a template using `dockr run [app]`
+- Environment variables templating in `compose.yaml` files
+- Verify, merge and docker-compose up using `dockr run`
+- Easy update to latest version of dockr using `dockr update`
 
 ## Getting started
 
@@ -49,7 +55,9 @@ wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/i
 ```
 
 ## Verify installation
+
 Make sure everything went fine by either running `dockr` or `dockr info`. You can also use the alias `dr`, e.g. `dr info`.
+
 ```text
 $ dockr
 
@@ -127,11 +135,11 @@ Environment variables is defined in the `.env` file in your app directory. If yo
 PORT=8080
 ```
 
-These environment variables may be used in `compose.yaml` files, e.g. `${PORT}` would result in `8080`.
+These environment variables may be used in `compose.yaml` files, e.g. `${{PORT}}` would result in `8080`.
 
 ### Global environment variables
 
-It's recommended to use globally defined and generated environment variables, such as `${DATA_DIR}`, that would return the absolute `data` path to the app during merge.
+It's recommended to use globally defined and generated environment variables, such as `${{DATA_DIR}}`, that would return the absolute `data` path to the app during merge.
 
 | Scope  | Variable          | Value                            | Description                                                       |
 | ------ | ----------------- | -------------------------------- | ----------------------------------------------------------------- |
@@ -140,9 +148,10 @@ It's recommended to use globally defined and generated environment variables, su
 | Global | `DOCKR_APP_NAME`  | `[app]`                          | App name during merge process of yaml files                       |
 | Global | `DOCKR_APP_PATH`  | `/[...]/config/[app]`            | Absolute app path during merge process of yaml files              |
 | Global | `DOCKR_DATA_PATH` | `/[...]/dockr/config/<app>/data` | Absolute path to apps `data` directory                            |
-| Global | `DOCKR_DISABLED`  | `<not set>`                      | Disables parse of `compose.yaml` app if env set                   |
+| Global | `DOCKR_DISABLED`  | `<not set>`                      | Disables parse of app's `compose.yaml` if env set                 |
 | Global | `TZ`              | `Europe/Malta`                   | Timezone                                                          |
 | App    | `PORT`            | `8080`                           | Example described in [App variables](#App-environment-variables). |
+
 ## Use Dockr using container (experimental)
 
 Working on having the `dockr` command wrapped to run the dockr image, and the end result would be to use dockr without installing any dependencies locally, besides docker of course.
