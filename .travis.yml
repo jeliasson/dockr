@@ -8,4 +8,4 @@ jobs:
       script: bash app/scripts/install-ci.sh ./app/scripts/setup.sh
 
     - stage: Running CI Script for experimental release
-      script: bash app/scripts/install-ci.sh ./app/scripts/setup2.sh
+      script: bash app/scripts/install-ci.sh ./app/scripts/setup-v2.sh
