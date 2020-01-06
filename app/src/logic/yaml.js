@@ -38,12 +38,13 @@ const parse = function(files) {
 	const rootConfigPath = `${path.config}/.env`
 	const rootConfig = require('dotenv').config({ path: rootConfigPath })
 
-	// Create output directory if not already exists
+	// Output directory
 	const outputPath = `${path.app.tmp}/yaml-parse-staging`
-	if (!fs.existsSync(outputPath)) {
-		fs.mkdirSync(outputPath, 0700)
-	}
 
+	// Create output directory
+	shell.exec(`mkdir -p ${outputPath}`, { silent: false })
+
+	// Prepare output files
 	let outputFiles = []
 
 	// Foreach all identified yaml files
