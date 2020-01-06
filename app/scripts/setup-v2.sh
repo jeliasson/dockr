@@ -31,7 +31,6 @@ fi
 
 # Build dockr
 echo "Building dockr image..."
-echo "This might take a little while."
 docker build -t dockr ${APP_PATH} 2>&1 > /dev/null
 
 # Request sudo permissions
