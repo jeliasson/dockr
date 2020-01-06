@@ -46,6 +46,11 @@ sudo ln --symbolic --force ${BIN_PATH}/dockr.sh /usr/local/bin/dr
 sudo ln --symbolic --force ${BIN_PATH}/dockr-v2.sh /usr/local/bin/dockr-v2
 sudo ln --symbolic --force ${BIN_PATH}/dockr-v2.sh /usr/local/bin/dr-v2
 
+# Set owner and permissions
+sudo chown -R $(whoami):$(whoami) ${APP_PATH} 2>&1 >/dev/null
+sudo chmod +x ${BIN_PATH}/* 2>&1 >/dev/null
+sudo chmod +x ${SCRIPT_PATH}/* 2>&1 >/dev/null
+
 # Finally, print the banner
 echo
 cat $APP_PATH/banner.txt
