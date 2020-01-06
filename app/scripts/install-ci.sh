@@ -2,9 +2,15 @@
 
 echo ""
 echo "#"
-echo "# One-line install"
+echo "# Setup"
 echo "#"
-wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null && bash install.sh
+/bin/bash ./dockr/app/scripts/setup.sh
+
+#echo ""
+#echo "#"
+#echo "# One-line install"
+#echo "#"
+#wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null && bash install.sh
 
 echo ""
 echo "#"
