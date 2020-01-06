@@ -4,13 +4,7 @@ echo ""
 echo "#"
 echo "# Setup"
 echo "#"
-/bin/bash ./app/scripts/setup.sh
-
-#echo ""
-#echo "#"
-#echo "# One-line install"
-#echo "#"
-#wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null && bash install.sh
+/bin/bash $1
 
 echo ""
 echo "#"
