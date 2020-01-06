@@ -5,7 +5,7 @@ sudo: required
 jobs:
   include:
     - stage: Running CI Script for current release
-      script: bash app/scripts/install-ci.sh ./app/scripts/setup.sh
+      script: bash app/scripts/install-ci.sh
 
     - stage: Running CI Script for experimental release
-      script: bash app/scripts/install-ci.sh ./app/scripts/setup-v2.sh
+      script: bash app/scripts/install-ci.sh -v2
