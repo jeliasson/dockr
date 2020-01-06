@@ -20,6 +20,12 @@ dockr info
 
 echo ""
 echo "#"
+echo "# Show dockr debug"
+echo "#"
+dockr debug
+
+echo ""
+echo "#"
 echo "# Update dockr"
 echo "#"
 dockr update
