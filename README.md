@@ -129,7 +129,7 @@ During `dockr run`, when generating app docker-compose files, dockr will bring e
 
 ### App environment variables
 
-Environment variables is defined in the `.env` file in your app directory. If you created the app using `dockr run`, this file has been created for you. Example syntax that would set environment variable `PORT` to value `8080`.
+Environment variables is defined in the `.env` file in your app directory. If you created the app using `dockr create`, this file has been created for you. Example syntax that would set environment variable `PORT` to value `8080`.
 
 ```bash
 PORT=8080
