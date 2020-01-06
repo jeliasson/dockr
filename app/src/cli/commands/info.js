@@ -41,6 +41,8 @@ program.on('command:info', function(dir) {
 	consola.info(`Dockr`)
 	console.log(`- Version: ${package.version}`)
 	console.log(`- Repository: ${package.repository.url}`)
+	console.log(`- Path: ${path.root}`)
+	console.log(`- Output: ${path.docker.compose}`)
 	console.log()
 
 	consola.info(`Docker`)
