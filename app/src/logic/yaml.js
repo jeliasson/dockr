@@ -1,12 +1,9 @@
 const consola = require('consola')
-const colors = require('colors')
 
 const fs = require('fs')
 const shell = require('shelljs')
 
 const YAML = require('yaml')
-const yamlValidator = require('yaml-validator')
-const yamlLint = require('yaml-lint')
 const jsYaml = require('js-yaml')
 
 const path = require('../utils/path')

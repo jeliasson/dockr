@@ -179,4 +179,4 @@ Feel free to fork and send a [Pull Request](pulls/) if you see something that ca
 
 ### Development
 
-To setup your development dockr, run `sh ./app/scripts/install-dev.sh`. What's different between the original installation script is basically checking out the dev-branch.
+To setup your development dockr, run `sh ./app/scripts/install-dev.sh`. What's different between the original installation script is basically checking out the dev-branch
