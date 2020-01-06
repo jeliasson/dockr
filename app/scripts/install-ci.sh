@@ -4,61 +4,61 @@ echo ""
 echo "#"
 echo "# Setup"
 echo "#"
-/bin/bash ./app/scripts/setup.sh
-
-#echo ""
-#echo "#"
-#echo "# One-line install"
-#echo "#"
-#wget -Nnv https://raw.githubusercontent.com/jeliasson/dockr/master/app/scripts/install.sh 2>&1 >/dev/null && bash install.sh
+/bin/bash ./app/scripts/setup$1.sh
 
 echo ""
 echo "#"
 echo "# Create dockr test-app"
 echo "#"
-dockr create test-app
+dockr$1 create test-app
 
 echo ""
 echo "#"
 echo "# Show dockr information"
 echo "#"
-dockr info
+dockr$1 info
+
+echo ""
+echo "#"
+echo "# Show dockr debug"
+echo "#"
+dockr$1 debug
 
 echo ""
 echo "#"
 echo "# Update dockr"
 echo "#"
-dockr update
+dockr$1 update
 
 echo ""
 echo "#"
 echo "# Run dockr"
 echo "#"
-dockr run
+dockr$1 run
 
 echo ""
 echo "#"
 echo "# Restart docker containers"
 echo "#"
-dockr restart
+dockr$1 restart
 
 echo ""
 echo "#"
 echo "# Logs for test app"
 echo "#"
-dockr logs test
+dockr$1 logs test
 
 echo ""
 echo "#"
 echo "# Backup dockr"
 echo "#"
-dockr backup
+dockr$1 backup
 
 echo ""
 echo "#"
 echo "# Bring down docker comtainers"
 echo "#"
-dockr compose down
+dockr$1 compose down
 
 echo "#"
 echo "# Done"

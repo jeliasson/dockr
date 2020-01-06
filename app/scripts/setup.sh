@@ -10,11 +10,11 @@ SCRIPTS_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd ../scripts && pwd)"
 
 echo
 echo "These paths will be used during the installation process"
-echo "  SCRIPT_PATH    ${SCRIPT_PATH}"
 echo "  APP_PATH       ${APP_PATH}"
 echo "  BIN_PATH       ${BIN_PATH}"
 echo "  CONFIG_PATH    ${CONFIG_PATH}"
 echo "  SCRIPTS_PATH   ${SCRIPTS_PATH}"
+echo "  SCRIPT_PATH    ${SCRIPT_PATH}"
 echo
 
 # Package manager detection files
@@ -38,7 +38,7 @@ for f in ${!OS_PACKAGE_MANAGER_DETECT[@]}
 do
     if [[ -f $f ]];then
         OS_PACKAGE_MANAGER="${OS_PACKAGE_MANAGER_DETECT[$f]}"
-        OS_RELEASE="${OS_RELEASE_DETECT[$f]}"        
+        OS_RELEASE="${OS_RELEASE_DETECT[$f]}"
     fi
 done
 
@@ -71,7 +71,7 @@ sudo $OS_PACKAGE_MANAGER install -f nodejs npm 2>&1 >/dev/null
 # Installing npm dependencies
 echo "Installing npm dependencies..."
 pushd $APP_PATH 2>&1 >/dev/null
-npm install  2>&1 >/dev/null
+npm install 2>&1 >/dev/null
 popd 2>&1 >/dev/null
 
 # Create symlinks to 'dockr' and 'dr'
@@ -82,6 +82,11 @@ sudo ln --symbolic --force ${BIN_PATH}/dockr.sh /usr/local/bin/dr
 # Creating symlinks to 'dockr-cli' and 'dr-cli' (Experimental)
 sudo ln --symbolic --force ${BIN_PATH}/dockr-cli.sh /usr/local/bin/dockr-cli
 sudo ln --symbolic --force ${BIN_PATH}/dockr-cli.sh /usr/local/bin/dr-cli
+
+# Set owner and permissions
+sudo chown -R $(whoami):$(whoami) ${APP_PATH} 2>&1 >/dev/null
+sudo chmod +x ${BIN_PATH}/* 2>&1 >/dev/null
+sudo chmod +x ${SCRIPTS_PATH}/* 2>&1 >/dev/null
 
 # Finally, print the banner
 echo

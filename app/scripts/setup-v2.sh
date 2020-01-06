@@ -14,6 +14,7 @@ echo "  APP_PATH       ${APP_PATH}"
 echo "  BIN_PATH       ${BIN_PATH}"
 echo "  CONFIG_PATH    ${CONFIG_PATH}"
 echo "  SCRIPTS_PATH   ${SCRIPTS_PATH}"
+echo "  SCRIPT_PATH    ${SCRIPT_PATH}"
 echo
 
 # Verify installation acceptance
@@ -30,7 +31,6 @@ fi
 
 # Build dockr
 echo "Building dockr image..."
-echo "This might take a little while."
 docker build -t dockr ${APP_PATH} 2>&1 > /dev/null
 
 # Request sudo permissions
@@ -45,6 +45,11 @@ sudo ln --symbolic --force ${BIN_PATH}/dockr.sh /usr/local/bin/dr
 # Creating symlinks to 'dockr-v2' and 'dr-v2' (Experimental)
 sudo ln --symbolic --force ${BIN_PATH}/dockr-v2.sh /usr/local/bin/dockr-v2
 sudo ln --symbolic --force ${BIN_PATH}/dockr-v2.sh /usr/local/bin/dr-v2
+
+# Set owner and permissions
+sudo chown -R $(whoami):$(whoami) ${APP_PATH} 2>&1 >/dev/null
+sudo chmod +x ${BIN_PATH}/* 2>&1 >/dev/null
+sudo chmod +x ${SCRIPTS_PATH}/* 2>&1 >/dev/null
 
 # Finally, print the banner
 echo
