@@ -4,7 +4,7 @@ echo ""
 echo "#"
 echo "# Setup"
 echo "#"
-/bin/bash ./dockr/app/scripts/setup.sh
+/bin/bash ./app/scripts/setup.sh
 
 #echo ""
 #echo "#"
