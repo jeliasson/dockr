@@ -14,6 +14,7 @@ echo "  APP_PATH       ${APP_PATH}"
 echo "  BIN_PATH       ${BIN_PATH}"
 echo "  CONFIG_PATH    ${CONFIG_PATH}"
 echo "  SCRIPTS_PATH   ${SCRIPTS_PATH}"
+echo "  SCRIPT_PATH    ${SCRIPT_PATH}"
 echo
 
 # Verify installation acceptance

@@ -10,11 +10,11 @@ SCRIPTS_PATH="$(cd "$(dirname "${BASH_SOURCE[0]}")" && cd ../scripts && pwd)"
 
 echo
 echo "These paths will be used during the installation process"
-echo "  SCRIPT_PATH    ${SCRIPT_PATH}"
 echo "  APP_PATH       ${APP_PATH}"
 echo "  BIN_PATH       ${BIN_PATH}"
 echo "  CONFIG_PATH    ${CONFIG_PATH}"
 echo "  SCRIPTS_PATH   ${SCRIPTS_PATH}"
+echo "  SCRIPT_PATH    ${SCRIPT_PATH}"
 echo
 
 # Package manager detection files
