@@ -86,7 +86,7 @@ sudo ln --symbolic --force ${BIN_PATH}/dockr-cli.sh /usr/local/bin/dr-cli
 # Set owner and permissions
 sudo chown -R $(whoami):$(whoami) ${APP_PATH} 2>&1 >/dev/null
 sudo chmod +x ${BIN_PATH}/* 2>&1 >/dev/null
-sudo chmod +x ${SCRIPT_PATH}/* 2>&1 >/dev/null
+sudo chmod +x ${SCRIPTS_PATH}/* 2>&1 >/dev/null
 
 # Finally, print the banner
 echo
