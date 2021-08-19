@@ -1,5 +1,8 @@
 ## Dockr
 
+> :warning: This repository has been discontinued. It was once created as a personal replacement to [DockSTARTER](https://dockstarter.com/) but I have since then moved on to more automation layers, such as [ansible](https://www.ansible.com/). 
+
+
 [![Build Status](https://www.travis-ci.com/jeliasson/dockr.svg?branch=master)](https://www.travis-ci.com/jeliasson/dockr)
 [![License: MIT](https://img.shields.io/badge/License-MIT-success.svg)](https://opensource.org/licenses/MIT)
 
